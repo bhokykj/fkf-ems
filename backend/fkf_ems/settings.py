@@ -7,7 +7,13 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'fkf-ems-cloud-secure-secret-key-2026-
 
 DEBUG = os.environ.get('DEBUG', 'True') == 'True'
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['.onrender.com', 'localhost', '127.0.0.1', '0.0.0.0']
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://*.onrender.com',
+    'http://localhost:3000',
+    'http://127.0.0.1:3000'
+]
 
 # NextSMS Tanzania Gateway Configuration
 NEXTSMS_USERNAME = os.environ.get('NEXTSMS_USERNAME', 'bhokykj.2e4')
