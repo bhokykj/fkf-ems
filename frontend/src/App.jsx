@@ -1085,7 +1085,7 @@ export default function App() {
     ? safeLoans.filter(l => l.created_by_officer_id && String(l.created_by_officer_id) === String(currentUser?.id))
     : safeLoans;
 
-  const pendingApprovalsCount = scopedLoans.filter(l => l.status === 'PENDING_BRANCH_APPROVAL' || l.status === 'PENDING_RISK_REVIEW').length;
+  const pendingApprovalsCount = scopedLoans.filter(l => ['PENDING_RISK_REVIEW', 'PENDING_BRANCH_APPROVAL', 'BRANCH_APPROVED', 'RISK_APPROVED'].includes(l.status)).length;
   const activeDisbursedCount = scopedLoans.filter(l => l.status === 'DISBURSED').length;
   const totalCollectionsTSH = scopedLoans.reduce((acc, l) => acc + (parseFloat(l.total_payable || 0) - parseFloat(l.balance_remaining || 0)), 0);
 

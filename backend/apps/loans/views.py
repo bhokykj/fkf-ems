@@ -169,18 +169,26 @@ class LoanViewSet(viewsets.ModelViewSet):
 
     @action(detail=True, methods=['post'])
     def approve(self, request, pk=None):
+        """Hatua 4: Super Admin Makao Makuu idhinisha mkopo kikamilifu → APPROVED"""
         loan = self.get_object()
         user_role = request.data.get('user_role') or getattr(request.user, 'role', '')
         if user_role != 'SUPER_ADMIN':
-            return Response({'error': 'Ni Super Admin pekee kutoka Makao Makuu anayeruhusiwa Ku-Approve Mkopo Kikamilifu.'}, status=status.HTTP_403_FORBIDDEN)
+            return Response({'error': 'Ni Super Admin pekee kutoka Makao Makuu anayeruhusiwa Ku-Approve Mkopo Kikamilifu (Hatua ya 4).'}, status=status.HTTP_403_FORBIDDEN)
 
-        # Only approve if it has passed risk review or is in PENDING_RISK_REVIEW
-        allowed_statuses = ['RISK_APPROVED', 'PENDING_RISK_REVIEW', 'BRANCH_APPROVED', 'PENDING_BRANCH_APPROVAL']
+        # Allow final approval if it has branch approval or is progressing through workflow
+        allowed_statuses = ['BRANCH_APPROVED', 'PENDING_BRANCH_APPROVAL', 'RISK_APPROVED', 'PENDING_RISK_REVIEW']
         if loan.status not in allowed_statuses:
             return Response({'error': f'Mkopo huu uko katika hali ya "{loan.status}" – hauwezi kuidhinishwa tena.'}, status=status.HTTP_400_BAD_REQUEST)
 
         loan.status = 'APPROVED'
         loan.save()
+
+        LoanComment.objects.create(
+            loan=loan,
+            author_name='Super Admin (HQ)',
+            author_role='Super Admin (Makao Makuu)',
+            comment="🏆 HATUA 4 (FINAL APPROVAL): Mkopo umeidhinishwa kikamilifu na Super Admin Makao Makuu. Mkopo uko tayari kutolewa fedha (Disbursement)."
+        )
 
         from .nextsms_service import send_nextsms
         msg = f"Hongera {loan.borrower.first_name}! Mkopo wako wa TZS {float(loan.principal_amount):,.0f} umeidhinishwa kikamilifu na FKF MICRO-CREDIT Makao Makuu (Tawi la {loan.branch.name})."
@@ -189,49 +197,116 @@ class LoanViewSet(viewsets.ModelViewSet):
         return Response(LoanSerializer(loan).data)
 
     @action(detail=True, methods=['post'])
+    def risk_pass(self, request, pk=None):
+        """Hatua 2: Tathmini ya Hatari (Risk Review) Imepita → PENDING_BRANCH_APPROVAL"""
+        loan = self.get_object()
+        user_role = request.data.get('user_role') or getattr(request.user, 'role', '')
+        if user_role not in ['BRANCH_MANAGER', 'SUPER_ADMIN', 'LOAN_OFFICER', 'FIELD_OFFICER']:
+            return Response({'error': 'Ni Meneja wa Tawi au Super Admin pekee anayeruhusiwa kufanya Risk Review.'}, status=status.HTTP_403_FORBIDDEN)
+
+        if loan.status not in ['PENDING_RISK_REVIEW']:
+            return Response({'error': f'Mkopo huu uko katika hali ya "{loan.status}" – hauhitaji Risk Review tena.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        reviewer_name = request.data.get('reviewer_name') or f"{request.data.get('user_first_name', '')} {request.data.get('user_last_name', '')}".strip() or 'Afisa wa Risk'
+        notes = request.data.get('notes', '')
+
+        loan.status = 'PENDING_BRANCH_APPROVAL'
+        loan.risk_reviewed_by = reviewer_name
+        loan.risk_reviewed_at = timezone.now()
+        loan.risk_review_notes = notes
+        loan.risk_review_decision = 'PASSED'
+        loan.save()
+
+        LoanComment.objects.create(
+            loan=loan,
+            author_name=reviewer_name,
+            author_role='Risk Review Officer',
+            comment=f"✅ HATUA 2 (RISK REVIEW – IMEPITA): Mkopo umepita tathmini ya hatari na umewasilishwa kwa Meneja wa Tawi kwa Hatua ya 3 (Branch Approval). {'Maelezo: ' + notes if notes else 'Mkopo hauna hatari kubwa.'}"
+        )
+
+        from .nextsms_service import send_nextsms
+        msg = f"Habari {loan.borrower.first_name}! Ombi lako la mkopo wa TZS {float(loan.principal_amount):,.0f} limepita Hatua 2 (Tathmini ya Hatari) na liko Hatua 3 (Idhini ya Meneja wa Tawi). FKF MICRO-CREDIT."
+        send_nextsms(to_phone=loan.borrower.phone, message_text=msg)
+
+        return Response(LoanSerializer(loan).data)
+
+    @action(detail=True, methods=['post'])
+    def risk_fail(self, request, pk=None):
+        """Hatua 2: Tathmini ya Hatari (Risk Review) Imeshindwa → RISK_FAILED"""
+        loan = self.get_object()
+        user_role = request.data.get('user_role') or getattr(request.user, 'role', '')
+        if user_role not in ['BRANCH_MANAGER', 'SUPER_ADMIN', 'LOAN_OFFICER', 'FIELD_OFFICER']:
+            return Response({'error': 'Ni Meneja wa Tawi au Super Admin pekee anayeruhusiwa kufanya Risk Review.'}, status=status.HTTP_403_FORBIDDEN)
+
+        if loan.status not in ['PENDING_RISK_REVIEW']:
+            return Response({'error': f'Mkopo huu uko katika hali ya "{loan.status}" – hauhitaji Risk Review tena.'}, status=status.HTTP_400_BAD_REQUEST)
+
+        reviewer_name = request.data.get('reviewer_name') or f"{request.data.get('user_first_name', '')} {request.data.get('user_last_name', '')}".strip() or 'Afisa wa Risk'
+        reason = request.data.get('notes') or request.data.get('reason', 'Mkopo haupiti vigezo vya tathmini ya hatari')
+
+        loan.status = 'RISK_FAILED'
+        loan.risk_reviewed_by = reviewer_name
+        loan.risk_reviewed_at = timezone.now()
+        loan.risk_review_notes = reason
+        loan.risk_review_decision = 'FAILED'
+        loan.save()
+
+        LoanComment.objects.create(
+            loan=loan,
+            author_name=reviewer_name,
+            author_role='Risk Review Officer',
+            comment=f"❌ HATUA 2 (RISK REVIEW – IMESHINDWA): Mkopo haupiti tathmini ya hatari. Sababu: {reason}"
+        )
+
+        from .nextsms_service import send_nextsms
+        msg = f"Samahani {loan.borrower.first_name}. Ombi lako la mkopo wa TZS {float(loan.principal_amount):,.0f} halikupita Hatua 2 (Tathmini ya Hatari). Wasiliana na tawi lako kwa maelezo zaidi. FKF MICRO-CREDIT."
+        send_nextsms(to_phone=loan.borrower.phone, message_text=msg)
+
+        return Response(LoanSerializer(loan).data)
+
+    @action(detail=True, methods=['post'])
     def branch_approve(self, request, pk=None):
-        """Branch Manager idhinisha mkopo → BRANCH_APPROVED → tuma kwa Risk Review"""
+        """Hatua 3: Branch Manager idhinisha mkopo baada ya Risk Review → BRANCH_APPROVED → tuma kwa Super Admin Final"""
         loan = self.get_object()
         user_role = request.data.get('user_role') or getattr(request.user, 'role', '')
         if user_role not in ['BRANCH_MANAGER', 'SUPER_ADMIN']:
             return Response({'error': 'Ni Meneja wa Tawi au Super Admin pekee anayeruhusiwa kufanya Branch Approval.'}, status=status.HTTP_403_FORBIDDEN)
 
-        if loan.status not in ['PENDING_BRANCH_APPROVAL']:
-            return Response({'error': f'Mkopo huu uko katika hali ya "{loan.status}" – hauhitaji Branch Approval tena.'}, status=status.HTTP_400_BAD_REQUEST)
+        if loan.status not in ['PENDING_BRANCH_APPROVAL', 'RISK_APPROVED']:
+            return Response({'error': f'Mkopo huu uko katika hali ya "{loan.status}" – unapaswa kupitia Risk Review kwanza au uko tayari umeidhinishwa.'}, status=status.HTTP_400_BAD_REQUEST)
 
         reviewer_name = request.data.get('reviewer_name') or f"{request.data.get('user_first_name', '')} {request.data.get('user_last_name', '')}".strip() or 'Meneja wa Tawi'
         notes = request.data.get('notes', '')
 
-        loan.status = 'PENDING_RISK_REVIEW'
+        loan.status = 'BRANCH_APPROVED'
         loan.branch_reviewed_by = reviewer_name
         loan.branch_reviewed_at = timezone.now()
         loan.branch_review_notes = notes
         loan.branch_review_decision = 'APPROVED'
         loan.save()
 
-        # Add automatic comment
         LoanComment.objects.create(
             loan=loan,
             author_name=reviewer_name,
             author_role='Meneja wa Tawi (Branch Approval)',
-            comment=f"✅ BRANCH APPROVAL: Mkopo umeidhinishwa na Meneja wa Tawi na umewasilishwa kwa Tathmini ya Hatari (Risk Review). {'Maelezo: ' + notes if notes else 'Mkopo umepitia ukaguzi wa awali wa tawi.'}"
+            comment=f"✅ HATUA 3 (BRANCH APPROVAL): Mkopo umeidhinishwa na Meneja wa Tawi na umewasilishwa kwa Super Admin Makao Makuu kwa Idhini ya Mwisho (Final Approval). {'Maelezo: ' + notes if notes else 'Mkopo umekamilika na kupitishwa na tawi.'}"
         )
 
         from .nextsms_service import send_nextsms
-        msg = f"Habari {loan.borrower.first_name}! Ombi lako la mkopo wa TZS {float(loan.principal_amount):,.0f} limepitishwa na Meneja wa Tawi ({loan.branch.name}) na liko katika hatua ya Tathmini ya Hatari. FKF MICRO-CREDIT."
+        msg = f"Habari {loan.borrower.first_name}! Ombi lako la mkopo wa TZS {float(loan.principal_amount):,.0f} limepitishwa na Meneja wa Tawi ({loan.branch.name}) na limewasilishwa Makao Makuu kwa Hatua ya 4 (Idhini ya Mwisho). FKF MICRO-CREDIT."
         send_nextsms(to_phone=loan.borrower.phone, message_text=msg)
 
         return Response(LoanSerializer(loan).data)
 
     @action(detail=True, methods=['post'])
     def branch_reject(self, request, pk=None):
-        """Branch Manager kataa mkopo → BRANCH_REJECTED"""
+        """Hatua 3: Branch Manager kataa mkopo → BRANCH_REJECTED"""
         loan = self.get_object()
         user_role = request.data.get('user_role') or getattr(request.user, 'role', '')
         if user_role not in ['BRANCH_MANAGER', 'SUPER_ADMIN']:
             return Response({'error': 'Ni Meneja wa Tawi au Super Admin pekee anayeruhusiwa kukataa mkopo.'}, status=status.HTTP_403_FORBIDDEN)
 
-        if loan.status not in ['PENDING_BRANCH_APPROVAL', 'PENDING_RISK_REVIEW']:
+        if loan.status not in ['PENDING_BRANCH_APPROVAL', 'RISK_APPROVED', 'PENDING_RISK_REVIEW']:
             return Response({'error': f'Mkopo huu uko katika hali ya "{loan.status}" – hauwezi kukataliwa tena.'}, status=status.HTTP_400_BAD_REQUEST)
 
         reviewer_name = request.data.get('reviewer_name') or f"{request.data.get('user_first_name', '')} {request.data.get('user_last_name', '')}".strip() or 'Meneja wa Tawi'
@@ -248,79 +323,11 @@ class LoanViewSet(viewsets.ModelViewSet):
             loan=loan,
             author_name=reviewer_name,
             author_role='Meneja wa Tawi (Branch Rejection)',
-            comment=f"❌ BRANCH REJECTION: Mkopo umekataliwa na Meneja wa Tawi. Sababu: {reason}"
+            comment=f"❌ HATUA 3 (BRANCH REJECTION): Mkopo umekataliwa na Meneja wa Tawi. Sababu: {reason}"
         )
 
         from .nextsms_service import send_nextsms
         msg = f"Samahani {loan.borrower.first_name}. Ombi lako la mkopo wa TZS {float(loan.principal_amount):,.0f} limekataliwa na Tawi la {loan.branch.name}. Wasiliana na tawi lako kwa maelezo zaidi. FKF MICRO-CREDIT."
-        send_nextsms(to_phone=loan.borrower.phone, message_text=msg)
-
-        return Response(LoanSerializer(loan).data)
-
-    @action(detail=True, methods=['post'])
-    def risk_pass(self, request, pk=None):
-        """Meneja wa Tawi / Risk Officer apitishe Risk Review → RISK_APPROVED → Super Admin Approve"""
-        loan = self.get_object()
-        user_role = request.data.get('user_role') or getattr(request.user, 'role', '')
-        if user_role not in ['BRANCH_MANAGER', 'SUPER_ADMIN']:
-            return Response({'error': 'Ni Meneja wa Tawi au Super Admin pekee anayeruhusiwa kufanya Risk Review.'}, status=status.HTTP_403_FORBIDDEN)
-
-        if loan.status not in ['PENDING_RISK_REVIEW', 'BRANCH_APPROVED']:
-            return Response({'error': f'Mkopo huu uko katika hali ya "{loan.status}" – hauhitaji Risk Review tena.'}, status=status.HTTP_400_BAD_REQUEST)
-
-        reviewer_name = request.data.get('reviewer_name') or f"{request.data.get('user_first_name', '')} {request.data.get('user_last_name', '')}".strip() or 'Meneja wa Tawi'
-        notes = request.data.get('notes', '')
-
-        loan.status = 'RISK_APPROVED'
-        loan.risk_reviewed_by = reviewer_name
-        loan.risk_reviewed_at = timezone.now()
-        loan.risk_review_notes = notes
-        loan.risk_review_decision = 'PASSED'
-        loan.save()
-
-        LoanComment.objects.create(
-            loan=loan,
-            author_name=reviewer_name,
-            author_role='Meneja wa Tawi (Risk Review)',
-            comment=f"✅ RISK REVIEW – IMEPITA: Mkopo umepita tathmini ya hatari na unasubiri idhini ya mwisho ya Super Admin (Makao Makuu). {'Maelezo: ' + notes if notes else 'Mkopo hauna hatari kubwa – umependekezwa kwa idhini ya mwisho.'}"
-        )
-
-        from .nextsms_service import send_nextsms
-        msg = f"Habari {loan.borrower.first_name}! Ombi lako la mkopo wa TZS {float(loan.principal_amount):,.0f} limepita hatua ya Tathmini ya Hatari na linasubiri idhini ya mwisho ya Makao Makuu. FKF MICRO-CREDIT."
-        send_nextsms(to_phone=loan.borrower.phone, message_text=msg)
-
-        return Response(LoanSerializer(loan).data)
-
-    @action(detail=True, methods=['post'])
-    def risk_fail(self, request, pk=None):
-        """Meneja wa Tawi / Risk Officer ashindwe Risk Review → RISK_FAILED"""
-        loan = self.get_object()
-        user_role = request.data.get('user_role') or getattr(request.user, 'role', '')
-        if user_role not in ['BRANCH_MANAGER', 'SUPER_ADMIN']:
-            return Response({'error': 'Ni Meneja wa Tawi au Super Admin pekee anayeruhusiwa kufanya Risk Review.'}, status=status.HTTP_403_FORBIDDEN)
-
-        if loan.status not in ['PENDING_RISK_REVIEW', 'BRANCH_APPROVED']:
-            return Response({'error': f'Mkopo huu uko katika hali ya "{loan.status}" – hauhitaji Risk Review tena.'}, status=status.HTTP_400_BAD_REQUEST)
-
-        reviewer_name = request.data.get('reviewer_name') or f"{request.data.get('user_first_name', '')} {request.data.get('user_last_name', '')}".strip() or 'Meneja wa Tawi'
-        reason = request.data.get('notes') or request.data.get('reason', 'Mkopo haupiti vigezo vya tathmini ya hatari')
-
-        loan.status = 'RISK_FAILED'
-        loan.risk_reviewed_by = reviewer_name
-        loan.risk_reviewed_at = timezone.now()
-        loan.risk_review_notes = reason
-        loan.risk_review_decision = 'FAILED'
-        loan.save()
-
-        LoanComment.objects.create(
-            loan=loan,
-            author_name=reviewer_name,
-            author_role='Meneja wa Tawi (Risk Review)',
-            comment=f"❌ RISK REVIEW – IMESHINDWA: Mkopo haupiti tathmini ya hatari na hauendi Makao Makuu. Sababu: {reason}"
-        )
-
-        from .nextsms_service import send_nextsms
-        msg = f"Samahani {loan.borrower.first_name}. Ombi lako la mkopo wa TZS {float(loan.principal_amount):,.0f} halikupita hatua ya Tathmini ya Hatari. Wasiliana na tawi lako kwa maelezo zaidi. FKF MICRO-CREDIT."
         send_nextsms(to_phone=loan.borrower.phone, message_text=msg)
 
         return Response(LoanSerializer(loan).data)

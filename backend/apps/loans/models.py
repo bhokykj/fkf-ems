@@ -127,13 +127,13 @@ class LoanProduct(models.Model):
 
 class Loan(models.Model):
     STATUS_CHOICES = [
-        ('PENDING_BRANCH_APPROVAL', 'Inasubiri Idhini ya Meneja wa Tawi'),
-        ('BRANCH_APPROVED', 'Imeidhinishwa na Meneja wa Tawi'),
-        ('BRANCH_REJECTED', 'Imekataliwa na Meneja wa Tawi'),
-        ('PENDING_RISK_REVIEW', 'Inasubiri Tathmini ya Hatari (Risk Review)'),
-        ('RISK_APPROVED', 'Imepita Tathmini ya Hatari – Subiri Super Admin'),
-        ('RISK_FAILED', 'Imeshindwa Tathmini ya Hatari – Imekataliwa'),
-        ('APPROVED', 'Imeidhinishwa Kikamilifu na Makao Makuu'),
+        ('PENDING_RISK_REVIEW', 'Hatua 1: Ombi Limeingia (Inasubiri Risk Review)'),
+        ('RISK_APPROVED', 'Hatua 2: Imepita Risk Review (Inasubiri Branch Approval)'),
+        ('RISK_FAILED', 'Hatua 2: Imeshindwa Risk Review – Imekataliwa'),
+        ('PENDING_BRANCH_APPROVAL', 'Hatua 3: Inasubiri Idhini ya Meneja wa Tawi'),
+        ('BRANCH_APPROVED', 'Hatua 3: Imeidhinishwa na Tawi (Inasubiri Super Admin Final)'),
+        ('BRANCH_REJECTED', 'Hatua 3: Imekataliwa na Meneja wa Tawi'),
+        ('APPROVED', 'Hatua 4: Imeidhinishwa Kikamilifu na Super Admin Makao Makuu'),
         ('DISBURSED', 'Fedha Zimetolewa kwa Mkopaji'),
         ('REPAID', 'Imelipwa Kikamilifu'),
         ('DEFAULTED', 'Imeshindwa Kulipa / Chini ya Urejeshaji'),
@@ -151,7 +151,7 @@ class Loan(models.Model):
     
     tenure_months = models.IntegerField(default=6)
     repayment_frequency = models.CharField(max_length=30, default='MONTHLY', choices=[('DAILY', 'Kila Siku / Daily'), ('WEEKLY', 'Kila Wiki / Weekly'), ('MONTHLY', 'Kila Mwezi / Monthly')])
-    status = models.CharField(max_length=30, choices=STATUS_CHOICES, default='PENDING_BRANCH_APPROVAL')
+    status = models.CharField(max_length=30, choices=STATUS_CHOICES, default='PENDING_RISK_REVIEW')
     
     # Disbursement & Delivery Method Tracking (Uidhinishaji na Utoaji wa Pesa)
     disbursement_method = models.CharField(

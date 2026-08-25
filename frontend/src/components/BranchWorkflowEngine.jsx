@@ -514,19 +514,19 @@ export default function BranchWorkflowEngine({
             <h3 style={{ fontSize: '1.25rem', fontWeight: '900', margin: '0 0 0.5rem 0', display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
               <UserCheck color="#D4AF37" size={24} /> Mfumo wa Uidhinishaji wa Mikopo (Multi-Stage Approval)
             </h3>
-            <p style={{ fontSize: '0.82rem', color: '#CBD5E1', margin: '0 0 1.25rem 0' }}>Hatua 4 za kuidhinisha mkopo: Ombi → Branch Approval → Risk Review → Super Admin Final</p>
+            <p style={{ fontSize: '0.85rem', color: '#CBD5E1', margin: '0 0 1.25rem 0', fontWeight: '700' }}>Hatua 4 za kuidhinisha mkopo: Ombi → Risk Review → Branch Approval → Super Admin Final</p>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '0.75rem' }}>
               {[
-                { step: '1', label: 'Ombi la Mkopo', status: 'PENDING_BRANCH_APPROVAL', color: '#F59E0B', icon: '📋' },
-                { step: '2', label: 'Branch Approval', status: 'PENDING_RISK_REVIEW', color: '#3B82F6', icon: '🏦' },
-                { step: '3', label: 'Risk Review', status: 'RISK_APPROVED', color: '#8B5CF6', icon: '🔍' },
-                { step: '4', label: 'Final Approval', status: 'APPROVED', color: '#10B981', icon: '✅' },
+                { step: '1', label: 'Ombi la Mkopo', status: 'PENDING_RISK_REVIEW', color: '#F59E0B', icon: '📋' },
+                { step: '2', label: 'Risk Review', status: 'PENDING_BRANCH_APPROVAL', color: '#8B5CF6', icon: '🔍' },
+                { step: '3', label: 'Branch Approval', status: 'BRANCH_APPROVED', color: '#3B82F6', icon: '🏦' },
+                { step: '4', label: 'Super Admin Final', status: 'APPROVED', color: '#10B981', icon: '✅' },
               ].map(s => (
-                <div key={s.step} style={{ background: 'rgba(255,255,255,0.08)', borderRadius: '12px', padding: '0.75rem', textAlign: 'center', border: `1px solid ${s.color}44` }}>
+                <div key={s.step} style={{ background: 'rgba(255,255,255,0.08)', borderRadius: '12px', padding: '0.75rem', textAlign: 'center', border: `1.5px solid ${s.color}` }}>
                   <div style={{ fontSize: '1.5rem', marginBottom: '0.25rem' }}>{s.icon}</div>
-                  <div style={{ fontSize: '0.72rem', fontWeight: '800', color: s.color }}>HATUA {s.step}</div>
-                  <div style={{ fontSize: '0.75rem', color: '#E2E8F0', marginTop: '0.15rem' }}>{s.label}</div>
-                  <div style={{ fontSize: '0.68rem', color: '#94A3B8', marginTop: '0.1rem', fontFamily: 'monospace' }}>
+                  <div style={{ fontSize: '0.75rem', fontWeight: '900', color: s.color }}>HATUA {s.step}</div>
+                  <div style={{ fontSize: '0.78rem', color: '#FFFFFF', fontWeight: '700', marginTop: '0.15rem' }}>{s.label}</div>
+                  <div style={{ fontSize: '0.72rem', color: '#CBD5E1', marginTop: '0.15rem', fontFamily: 'monospace', fontWeight: '700' }}>
                     {branchLoans.filter(l => l.status === s.status).length} mkopo(s)
                   </div>
                 </div>
@@ -539,65 +539,65 @@ export default function BranchWorkflowEngine({
             {branchLoans.filter(l => l.status !== 'REPAID').map(l => {
               const isBranchManager = currentUser?.role === 'BRANCH_MANAGER';
               const isSuperAdmin = currentUser?.role === 'SUPER_ADMIN';
-              const canBranchApprove = (isBranchManager || isSuperAdmin) && l.status === 'PENDING_BRANCH_APPROVAL';
-              const canBranchReject  = (isBranchManager || isSuperAdmin) && ['PENDING_BRANCH_APPROVAL', 'PENDING_RISK_REVIEW'].includes(l.status);
-              const canRiskPass      = (isBranchManager || isSuperAdmin) && ['PENDING_RISK_REVIEW', 'BRANCH_APPROVED'].includes(l.status);
-              const canRiskFail      = (isBranchManager || isSuperAdmin) && ['PENDING_RISK_REVIEW', 'BRANCH_APPROVED'].includes(l.status);
-              const canSuperApprove  = isSuperAdmin && ['RISK_APPROVED', 'PENDING_RISK_REVIEW', 'BRANCH_APPROVED', 'PENDING_BRANCH_APPROVAL'].includes(l.status);
+              const canRiskPass      = (isBranchManager || isSuperAdmin) && l.status === 'PENDING_RISK_REVIEW';
+              const canRiskFail      = (isBranchManager || isSuperAdmin) && l.status === 'PENDING_RISK_REVIEW';
+              const canBranchApprove = (isBranchManager || isSuperAdmin) && ['PENDING_BRANCH_APPROVAL', 'RISK_APPROVED'].includes(l.status);
+              const canBranchReject  = (isBranchManager || isSuperAdmin) && ['PENDING_BRANCH_APPROVAL', 'PENDING_RISK_REVIEW', 'RISK_APPROVED'].includes(l.status);
+              const canSuperApprove  = isSuperAdmin && ['BRANCH_APPROVED', 'PENDING_BRANCH_APPROVAL', 'RISK_APPROVED', 'PENDING_RISK_REVIEW'].includes(l.status);
               const canDisburse      = (isBranchManager || isSuperAdmin) && l.status === 'APPROVED';
 
               const statusConfig = {
-                'PENDING_BRANCH_APPROVAL': { label: 'Inasubiri Branch Approval', color: '#F59E0B', bg: '#FFFBEB', border: '#FDE68A' },
-                'BRANCH_APPROVED':         { label: 'Imeidhinishwa na Tawi', color: '#3B82F6', bg: '#EFF6FF', border: '#BFDBFE' },
-                'BRANCH_REJECTED':         { label: 'Imekataliwa na Tawi', color: '#DC2626', bg: '#FEF2F2', border: '#FCA5A5' },
-                'PENDING_RISK_REVIEW':     { label: 'Inasubiri Risk Review', color: '#8B5CF6', bg: '#F5F3FF', border: '#DDD6FE' },
-                'RISK_APPROVED':           { label: '✅ Risk Review: Imepita', color: '#059669', bg: '#ECFDF5', border: '#A7F3D0' },
+                'PENDING_RISK_REVIEW':     { label: 'Hatua 2: Inasubiri Risk Review', color: '#8B5CF6', bg: '#F5F3FF', border: '#DDD6FE' },
+                'RISK_APPROVED':           { label: '✅ Risk Review: Imepita', color: '#8B5CF6', bg: '#F5F3FF', border: '#C4B5FD' },
                 'RISK_FAILED':             { label: '❌ Risk Review: Imeshindwa', color: '#DC2626', bg: '#FEF2F2', border: '#FCA5A5' },
-                'APPROVED':                { label: '🏆 Imeidhinishwa Kikamilifu', color: '#047857', bg: '#ECFDF5', border: '#6EE7B7' },
+                'PENDING_BRANCH_APPROVAL': { label: 'Hatua 3: Inasubiri Branch Approval', color: '#3B82F6', bg: '#EFF6FF', border: '#BFDBFE' },
+                'BRANCH_APPROVED':         { label: '✅ Hatua 3: Imeidhinishwa na Tawi', color: '#2563EB', bg: '#DBEAFE', border: '#93C5FD' },
+                'BRANCH_REJECTED':         { label: '❌ Imekataliwa na Tawi', color: '#DC2626', bg: '#FEF2F2', border: '#FCA5A5' },
+                'APPROVED':                { label: '🏆 Hatua 4: Super Admin Final', color: '#047857', bg: '#ECFDF5', border: '#6EE7B7' },
                 'DISBURSED':               { label: '💵 Fedha Zimetolewa', color: '#065F46', bg: '#D1FAE5', border: '#6EE7B7' },
                 'DEFAULTED':               { label: '⚠️ Imeshindwa Kulipa', color: '#B45309', bg: '#FEF3C7', border: '#FCD34D' },
               };
               const sc = statusConfig[l.status] || { label: l.status, color: '#64748B', bg: '#F8FAFC', border: '#E2E8F0' };
 
               return (
-                <div key={l.id} style={{ background: '#FFFFFF', border: `1px solid ${sc.border}`, borderRadius: '18px', padding: '1.35rem', display: 'flex', flexDirection: 'column', gap: '0.85rem', boxShadow: '0 4px 16px rgba(0,0,0,0.05)', borderTop: `4px solid ${sc.color}` }}>
+                <div key={l.id} style={{ background: '#FFFFFF', border: `1.5px solid ${sc.border}`, borderRadius: '18px', padding: '1.35rem', display: 'flex', flexDirection: 'column', gap: '0.85rem', boxShadow: '0 4px 16px rgba(0,0,0,0.05)', borderTop: `5px solid ${sc.color}` }}>
 
                   {/* LOAN HEADER */}
                   <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
                     <div>
                       <h4 style={{ color: '#0F172A', fontSize: '1.05rem', fontWeight: '900', margin: 0 }}>LN-TZ-{l.id}</h4>
-                      <span style={{ fontSize: '0.8rem', color: '#475569', fontWeight: '600' }}>
+                      <span style={{ fontSize: '0.85rem', color: '#0F172A', fontWeight: '700' }}>
                         {l.borrower_detail ? `${l.borrower_detail.first_name} ${l.borrower_detail.last_name}` : `Mkopaji #${l.borrower}`}
                       </span>
-                      {l.branch_detail && <div style={{ fontSize: '0.72rem', color: '#94A3B8', marginTop: '0.1rem' }}>🏢 {l.branch_detail.name}</div>}
+                      {l.branch_detail && <div style={{ fontSize: '0.75rem', color: '#475569', fontWeight: '600', marginTop: '0.1rem' }}>🏢 {l.branch_detail.name}</div>}
                     </div>
-                    <span style={{ fontSize: '0.72rem', fontWeight: '800', padding: '0.35rem 0.7rem', borderRadius: '9999px', background: sc.bg, color: sc.color, border: `1px solid ${sc.border}`, textAlign: 'center', maxWidth: '130px' }}>
+                    <span style={{ fontSize: '0.72rem', fontWeight: '900', padding: '0.35rem 0.7rem', borderRadius: '9999px', background: sc.bg, color: sc.color, border: `1.5px solid ${sc.border}`, textAlign: 'center', maxWidth: '140px' }}>
                       {sc.label}
                     </span>
                   </div>
 
                   {/* LOAN FINANCIALS */}
-                  <div style={{ background: '#F8FAFC', padding: '0.75rem', borderRadius: '10px', border: '1px solid #E2E8F0', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.3rem', fontSize: '0.8rem' }}>
-                    <span style={{ color: '#64748B' }}>Kiasi:</span>
-                    <strong style={{ color: '#059669', textAlign: 'right' }}>TSH {parseFloat(l.principal_amount || 0).toLocaleString()}</strong>
-                    <span style={{ color: '#64748B' }}>Riba ({l.interest_rate_pct}%):</span>
-                    <strong style={{ color: '#B8860B', textAlign: 'right' }}>TSH {parseFloat(l.interest_amount || 0).toLocaleString()}</strong>
-                    <span style={{ color: '#64748B' }}>Jumla Kurudisha:</span>
-                    <strong style={{ color: '#0F172A', textAlign: 'right' }}>TSH {parseFloat(l.total_payable || 0).toLocaleString()}</strong>
+                  <div style={{ background: '#F8FAFC', padding: '0.75rem', borderRadius: '10px', border: '1px solid #CBD5E1', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.3rem', fontSize: '0.82rem' }}>
+                    <span style={{ color: '#0F172A', fontWeight: '800' }}>Kiasi cha Mkopo:</span>
+                    <strong style={{ color: '#047857', textAlign: 'right', fontWeight: '900' }}>TSH {parseFloat(l.principal_amount || 0).toLocaleString()}</strong>
+                    <span style={{ color: '#78350F', fontWeight: '800' }}>Riba ({l.interest_rate_pct}%):</span>
+                    <strong style={{ color: '#B8860B', textAlign: 'right', fontWeight: '900' }}>TSH {parseFloat(l.interest_amount || 0).toLocaleString()}</strong>
+                    <span style={{ color: '#0F172A', fontWeight: '800' }}>Jumla Kurudisha:</span>
+                    <strong style={{ color: '#0F172A', textAlign: 'right', fontWeight: '900' }}>TSH {parseFloat(l.total_payable || 0).toLocaleString()}</strong>
                   </div>
 
                   {/* APPROVAL TRAIL (show who did what) */}
                   {(l.branch_reviewed_by || l.risk_reviewed_by) && (
                     <div style={{ background: '#F0F9FF', border: '1px solid #BAE6FD', borderRadius: '10px', padding: '0.65rem', fontSize: '0.75rem', display: 'flex', flexDirection: 'column', gap: '0.2rem' }}>
                       <div style={{ fontWeight: '800', color: '#0369A1', marginBottom: '0.2rem' }}>📋 Rekodi ya Ukaguzi:</div>
-                      {l.branch_reviewed_by && (
-                        <div style={{ color: '#0369A1' }}>
-                          🏦 <strong>Branch {l.branch_review_decision === 'APPROVED' ? '✅' : '❌'}:</strong> {l.branch_reviewed_by} · {l.branch_review_notes || 'Hakuna maelezo'}
+                      {l.risk_reviewed_by && (
+                        <div style={{ color: '#6D28D9', fontWeight: '700' }}>
+                          🔍 <strong>Hatua 2 (Risk {l.risk_review_decision === 'PASSED' ? '✅' : '❌'}):</strong> {l.risk_reviewed_by} · {l.risk_review_notes || 'Bila maelezo'}
                         </div>
                       )}
-                      {l.risk_reviewed_by && (
-                        <div style={{ color: '#6D28D9' }}>
-                          🔍 <strong>Risk {l.risk_review_decision === 'PASSED' ? '✅' : '❌'}:</strong> {l.risk_reviewed_by} · {l.risk_review_notes || 'Hakuna maelezo'}
+                      {l.branch_reviewed_by && (
+                        <div style={{ color: '#0369A1', fontWeight: '700' }}>
+                          🏦 <strong>Hatua 3 (Branch {l.branch_review_decision === 'APPROVED' ? '✅' : '❌'}):</strong> {l.branch_reviewed_by} · {l.branch_review_notes || 'Bila maelezo'}
                         </div>
                       )}
                     </div>
@@ -615,83 +615,83 @@ export default function BranchWorkflowEngine({
                   {/* ===== ACTION BUTTONS ===== */}
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '0.5rem', marginTop: 'auto' }}>
 
-                    {/* STEP 2: BRANCH APPROVAL BUTTONS (Branch Manager only) */}
-                    {canBranchApprove && (
-                      <div style={{ display: 'flex', gap: '0.4rem' }}>
-                        <button
-                          onClick={() => {
-                            const notes = window.prompt(`✅ BRANCH APPROVAL\nLN-TZ-${l.id} – ${l.borrower_detail?.first_name || ''} ${l.borrower_detail?.last_name || ''}\nTSH ${parseFloat(l.principal_amount||0).toLocaleString()}\n\nAndika maelezo ya Branch Approval (au bonyeza OK bila maelezo):`);
-                            if (notes !== null) onBranchApproveLoan(l.id, notes || '');
-                          }}
-                          style={{ flex: 1, padding: '0.65rem 0.75rem', borderRadius: '10px', border: 'none', background: 'linear-gradient(135deg, #1E40AF, #3B82F6)', color: '#FFFFFF', fontWeight: '800', fontSize: '0.8rem', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.35rem' }}
-                        >
-                          <CheckCircle2 size={15} /> Branch Approval ✅
-                        </button>
-                        <button
-                          onClick={() => {
-                            const reason = window.prompt(`❌ BRANCH REJECTION\nLN-TZ-${l.id} – ${l.borrower_detail?.first_name || ''} ${l.borrower_detail?.last_name || ''}\n\nToa sababu ya kukataa mkopo huu:`);
-                            if (reason !== null && reason.trim()) onBranchRejectLoan(l.id, reason);
-                            else if (reason !== null) alert('Tafadhali toa sababu ya kukataa mkopo.');
-                          }}
-                          style={{ flex: 1, padding: '0.65rem 0.75rem', borderRadius: '10px', outline: 'none', background: '#FEF2F2', color: '#DC2626', fontWeight: '800', fontSize: '0.8rem', cursor: 'pointer', border: '2px solid #FCA5A5', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.35rem' }}
-                        >
-                          <X size={15} /> Branch Reject ❌
-                        </button>
-                      </div>
-                    )}
-
-                    {/* STEP 3: RISK REVIEW BUTTONS (Branch Manager only, after Branch Approval) */}
+                    {/* STEP 2: RISK REVIEW BUTTONS (Appears First after Application) */}
                     {canRiskPass && (
                       <div style={{ display: 'flex', gap: '0.4rem' }}>
                         <button
                           onClick={() => {
-                            const notes = window.prompt(`🔍 RISK REVIEW – PASS\nLN-TZ-${l.id} – ${l.borrower_detail?.first_name || ''} ${l.borrower_detail?.last_name || ''}\nTSH ${parseFloat(l.principal_amount||0).toLocaleString()}\n\nAndika maelezo ya Risk Review (au bonyeza OK):`);
+                            const notes = window.prompt(`🔍 HATUA 2: RISK REVIEW – PASS\nLN-TZ-${l.id} – ${l.borrower_detail?.first_name || ''} ${l.borrower_detail?.last_name || ''}\nTSH ${parseFloat(l.principal_amount||0).toLocaleString()}\n\nAndika maelezo ya Tathmini ya Hatari (au bonyeza OK):`);
                             if (notes !== null) onRiskPassLoan(l.id, notes || '');
                           }}
-                          style={{ flex: 1, padding: '0.65rem 0.75rem', borderRadius: '10px', border: 'none', background: 'linear-gradient(135deg, #5B21B6, #8B5CF6)', color: '#FFFFFF', fontWeight: '800', fontSize: '0.8rem', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.35rem' }}
+                          style={{ flex: 1, padding: '0.65rem 0.75rem', borderRadius: '10px', border: 'none', background: 'linear-gradient(135deg, #5B21B6, #8B5CF6)', color: '#FFFFFF', fontWeight: '900', fontSize: '0.8rem', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.35rem' }}
                         >
-                          <ShieldCheck size={15} /> Risk Review: Imepita ✅
+                          <ShieldCheck size={15} /> 2. Risk Review: Imepita ✅
                         </button>
                         <button
                           onClick={() => {
-                            const reason = window.prompt(`❌ RISK REVIEW – FAIL\nLN-TZ-${l.id} – ${l.borrower_detail?.first_name || ''} ${l.borrower_detail?.last_name || ''}\n\nToa sababu ya kushindwa Risk Review:`);
+                            const reason = window.prompt(`❌ HATUA 2: RISK REVIEW – FAIL\nLN-TZ-${l.id} – ${l.borrower_detail?.first_name || ''} ${l.borrower_detail?.last_name || ''}\n\nToa sababu ya mkopo kushindwa Risk Review:`);
                             if (reason !== null && reason.trim()) onRiskFailLoan(l.id, reason);
                             else if (reason !== null) alert('Tafadhali toa sababu ya kushindwa kwenye Risk Review.');
                           }}
-                          style={{ flex: 1, padding: '0.65rem 0.75rem', borderRadius: '10px', outline: 'none', background: '#FFF7ED', color: '#C2410C', fontWeight: '800', fontSize: '0.8rem', cursor: 'pointer', border: '2px solid #FDBA74', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.35rem' }}
+                          style={{ flex: 1, padding: '0.65rem 0.75rem', borderRadius: '10px', outline: 'none', background: '#FFF7ED', color: '#C2410C', fontWeight: '900', fontSize: '0.8rem', cursor: 'pointer', border: '2px solid #FDBA74', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.35rem' }}
                         >
-                          <ShieldAlert size={15} /> Risk Review: Fail ❌
+                          <ShieldAlert size={15} /> 2. Risk Fail ❌
                         </button>
                       </div>
                     )}
 
-                    {/* STEP 4: SUPER ADMIN FINAL APPROVAL (Super Admin only, after Risk Review) */}
+                    {/* STEP 3: BRANCH APPROVAL BUTTONS (Appears after Risk Review) */}
+                    {canBranchApprove && (
+                      <div style={{ display: 'flex', gap: '0.4rem' }}>
+                        <button
+                          onClick={() => {
+                            const notes = window.prompt(`✅ HATUA 3: BRANCH APPROVAL\nLN-TZ-${l.id} – ${l.borrower_detail?.first_name || ''} ${l.borrower_detail?.last_name || ''}\nTSH ${parseFloat(l.principal_amount||0).toLocaleString()}\n\nAndika maelezo ya Branch Approval (au bonyeza OK bila maelezo):`);
+                            if (notes !== null) onBranchApproveLoan(l.id, notes || '');
+                          }}
+                          style={{ flex: 1, padding: '0.65rem 0.75rem', borderRadius: '10px', border: 'none', background: 'linear-gradient(135deg, #1E40AF, #3B82F6)', color: '#FFFFFF', fontWeight: '900', fontSize: '0.8rem', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.35rem' }}
+                        >
+                          <CheckCircle2 size={15} /> 3. Branch Approval ✅
+                        </button>
+                        <button
+                          onClick={() => {
+                            const reason = window.prompt(`❌ HATUA 3: BRANCH REJECTION\nLN-TZ-${l.id} – ${l.borrower_detail?.first_name || ''} ${l.borrower_detail?.last_name || ''}\n\nToa sababu ya kukataa mkopo huu:`);
+                            if (reason !== null && reason.trim()) onBranchRejectLoan(l.id, reason);
+                            else if (reason !== null) alert('Tafadhali toa sababu ya kukataa mkopo.');
+                          }}
+                          style={{ flex: 1, padding: '0.65rem 0.75rem', borderRadius: '10px', outline: 'none', background: '#FEF2F2', color: '#DC2626', fontWeight: '900', fontSize: '0.8rem', cursor: 'pointer', border: '2px solid #FCA5A5', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.35rem' }}
+                        >
+                          <X size={15} /> 3. Branch Reject ❌
+                        </button>
+                      </div>
+                    )}
+
+                    {/* STEP 4: SUPER ADMIN FINAL APPROVAL (Super Admin only, after Branch Approval) */}
                     {canSuperApprove && (
                       <button
                         onClick={() => {
-                          const confirm = window.confirm(`🏆 FINAL APPROVAL – SUPER ADMIN\n\nLN-TZ-${l.id} – ${l.borrower_detail?.first_name || ''} ${l.borrower_detail?.last_name || ''}\nTSH ${parseFloat(l.principal_amount||0).toLocaleString()}\nHali: ${l.status}\n\nUnathibitisha kuidhinisha mkopo huu kikamilifu?`);
+                          const confirm = window.confirm(`🏆 HATUA 4: FINAL APPROVAL – SUPER ADMIN\n\nLN-TZ-${l.id} – ${l.borrower_detail?.first_name || ''} ${l.borrower_detail?.last_name || ''}\nTSH ${parseFloat(l.principal_amount||0).toLocaleString()}\nHali: ${l.status}\n\nUnathibitisha kuidhinisha mkopo huu kikamilifu?`);
                           if (confirm) onApproveLoan(l.id);
                         }}
-                        style={{ padding: '0.7rem', borderRadius: '10px', border: 'none', background: 'linear-gradient(135deg, #065F46, #059669)', color: '#FFFFFF', fontWeight: '900', fontSize: '0.85rem', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.45rem', boxShadow: '0 4px 12px rgba(5,150,105,0.3)' }}
+                        style={{ padding: '0.75rem', borderRadius: '10px', border: 'none', background: 'linear-gradient(135deg, #065F46, #059669)', color: '#FFFFFF', fontWeight: '900', fontSize: '0.88rem', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.45rem', boxShadow: '0 4px 12px rgba(5,150,105,0.3)' }}
                       >
-                        <Award size={16} /> Idhinisha Mkopo Kikamilifu (Super Admin HQ) 🏆
+                        <Award size={18} /> 4. Idhinisha Mkopo Kikamilifu (Super Admin HQ) 🏆
                       </button>
                     )}
 
                     {/* STATUS BADGES for locked states */}
-                    {!canBranchApprove && !canRiskPass && !canSuperApprove && !canDisburse && l.status === 'PENDING_BRANCH_APPROVAL' && (
-                      <div style={{ padding: '0.6rem', borderRadius: '10px', background: '#FEF9C3', border: '1px solid #FDE047', color: '#854D0E', fontSize: '0.8rem', fontWeight: '700', textAlign: 'center' }}>
-                        ⏳ Inasubiri Branch Manager aidulushe mkopo huu
+                    {!canRiskPass && !canBranchApprove && !canSuperApprove && !canDisburse && l.status === 'PENDING_RISK_REVIEW' && (
+                      <div style={{ padding: '0.6rem', borderRadius: '10px', background: '#F3E8FF', border: '1px solid #DDD6FE', color: '#6D28D9', fontSize: '0.8rem', fontWeight: '800', textAlign: 'center' }}>
+                        🔍 Inasubiri Hatua 2: Tathmini ya Hatari (Risk Review)
                       </div>
                     )}
-                    {!canBranchApprove && !canRiskPass && !canSuperApprove && !canDisburse && l.status === 'PENDING_RISK_REVIEW' && (
-                      <div style={{ padding: '0.6rem', borderRadius: '10px', background: '#F3E8FF', border: '1px solid #DDD6FE', color: '#6D28D9', fontSize: '0.8rem', fontWeight: '700', textAlign: 'center' }}>
-                        🔍 Inasubiri Risk Review na Meneja wa Tawi
+                    {!canRiskPass && !canBranchApprove && !canSuperApprove && !canDisburse && l.status === 'PENDING_BRANCH_APPROVAL' && (
+                      <div style={{ padding: '0.6rem', borderRadius: '10px', background: '#EFF6FF', border: '1px solid #BFDBFE', color: '#1E40AF', fontSize: '0.8rem', fontWeight: '800', textAlign: 'center' }}>
+                        🏦 Inasubiri Hatua 3: Idhini ya Meneja wa Tawi (Branch Approval)
                       </div>
                     )}
-                    {l.status === 'RISK_APPROVED' && !canSuperApprove && (
-                      <div style={{ padding: '0.6rem', borderRadius: '10px', background: '#ECFDF5', border: '1px solid #A7F3D0', color: '#047857', fontSize: '0.8rem', fontWeight: '700', textAlign: 'center' }}>
-                        ✅ Imepita Risk Review – Inasubiri Final Approval ya Super Admin
+                    {l.status === 'BRANCH_APPROVED' && !canSuperApprove && (
+                      <div style={{ padding: '0.6rem', borderRadius: '10px', background: '#ECFDF5', border: '1px solid #A7F3D0', color: '#047857', fontSize: '0.8rem', fontWeight: '800', textAlign: 'center' }}>
+                        ✅ Imeidhinishwa na Tawi – Inasubiri Hatua 4 (Super Admin Final)
                       </div>
                     )}
                     {l.status === 'BRANCH_REJECTED' && (

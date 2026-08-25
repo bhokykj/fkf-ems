@@ -107,12 +107,16 @@ export default function EditLoanModal({ loan, onClose, onSave }) {
               onChange={(e) => setStatus(e.target.value)}
               style={{ width: '100%', padding: '0.65rem', border: '1px solid #CBD5E1', borderRadius: '8px', fontWeight: '700', color: '#0F172A' }}
             >
-              <option value="PENDING_BRANCH_APPROVAL">PENDING_BRANCH_APPROVAL</option>
-              <option value="PENDING_RISK_REVIEW">PENDING_RISK_REVIEW</option>
-              <option value="APPROVED">APPROVED</option>
-              <option value="DISBURSED">DISBURSED</option>
-              <option value="REPAID">REPAID</option>
-              <option value="DEFAULTED">DEFAULTED</option>
+              <option value="PENDING_RISK_REVIEW">1. PENDING_RISK_REVIEW (Inasubiri Risk Review)</option>
+              <option value="RISK_APPROVED">2. RISK_APPROVED (Imepita Risk Review)</option>
+              <option value="PENDING_BRANCH_APPROVAL">3. PENDING_BRANCH_APPROVAL (Inasubiri Idhini ya Tawi)</option>
+              <option value="BRANCH_APPROVED">3. BRANCH_APPROVED (Imeidhinishwa na Tawi)</option>
+              <option value="APPROVED">4. APPROVED (Imeidhinishwa na Super Admin HQ)</option>
+              <option value="DISBURSED">DISBURSED (Fedha Zimetolewa)</option>
+              <option value="REPAID">REPAID (Imelipwa Kikamilifu)</option>
+              <option value="DEFAULTED">DEFAULTED (Imeshindwa Kulipa)</option>
+              <option value="BRANCH_REJECTED">BRANCH_REJECTED (Imekataliwa na Tawi)</option>
+              <option value="RISK_FAILED">RISK_FAILED (Imeshindwa Risk Review)</option>
             </select>
           </div>
 
