@@ -130,33 +130,36 @@ select option:disabled {
 .nav-pill-bar {
   display: flex;
   align-items: center;
-  gap: 0.6rem;
+  gap: 0.65rem;
   padding: 0.75rem 2rem;
   background: #FFFFFF;
   border-bottom: 2px solid #E2E8F0;
   overflow-x: auto;
+  scrollbar-width: thin;
+  -webkit-overflow-scrolling: touch;
 }
 
 .nav-pill-btn {
   background: #F8FAFC;
-  color: #1E293B;
+  color: #0F172A;
   border: 1.5px solid #CBD5E1;
-  padding: 0.55rem 1.15rem;
+  padding: 0.6rem 1.25rem;
   border-radius: 9999px;
-  font-size: 0.85rem;
-  font-weight: 800;
+  font-size: 0.88rem;
+  font-weight: 900;
   cursor: pointer;
   display: inline-flex;
   align-items: center;
   gap: 0.45rem;
   white-space: nowrap;
+  flex-shrink: 0;
   transition: all 0.2s ease;
 }
 
 .nav-pill-btn:hover {
   background: #E2E8F0;
   color: #0F172A;
-  border-color: #94A3B8;
+  border-color: #64748B;
 }
 
 .nav-pill-btn.active {

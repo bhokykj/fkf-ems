@@ -59,41 +59,116 @@ export default function BorrowerFullViewModal({ borrower, loans, onClose, initia
           </button>
         </div>
 
-        {/* TOP TAB STRIP MATCHING HANDWRITTEN PHOTO */}
-        <div style={{ display: 'flex', gap: '0.6rem', borderBottom: '2px solid #CBD5E1', padding: '0.75rem 1.75rem', background: '#F8FAFC', flexWrap: 'wrap' }}>
+        {/* TOP TAB STRIP MATCHING HANDWRITTEN PHOTO (HIGH CONTRAST & NEVER SQUEEZED) */}
+        <div style={{ display: 'flex', gap: '0.65rem', borderBottom: '2px solid #CBD5E1', padding: '0.85rem 1.75rem', background: '#F1F5F9', flexWrap: 'wrap', alignItems: 'center' }}>
           <button 
             onClick={() => setActiveTab('DETAILS')}
-            style={{ background: activeTab === 'DETAILS' ? '#0284C7' : '#FFFFFF', color: activeTab === 'DETAILS' ? '#FFFFFF' : '#0F172A', border: activeTab === 'DETAILS' ? '2px solid #0284C7' : '1.5px solid #CBD5E1', padding: '0.6rem 1.25rem', borderRadius: '9999px', fontWeight: '900', fontSize: '0.85rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.4rem' }}
+            style={{ 
+              background: activeTab === 'DETAILS' ? '#0284C7' : '#FFFFFF', 
+              color: activeTab === 'DETAILS' ? '#FFFFFF' : '#0F172A', 
+              border: activeTab === 'DETAILS' ? '2px solid #0284C7' : '1.5px solid #94A3B8', 
+              padding: '0.65rem 1.25rem', 
+              borderRadius: '12px', 
+              fontWeight: '900', 
+              fontSize: '0.88rem', 
+              cursor: 'pointer', 
+              display: 'inline-flex', 
+              alignItems: 'center', 
+              gap: '0.45rem',
+              whiteSpace: 'nowrap',
+              flexShrink: 0,
+              boxShadow: activeTab === 'DETAILS' ? '0 4px 12px rgba(2, 132, 199, 0.35)' : '0 1px 3px rgba(0,0,0,0.06)'
+            }}
           >
-            <User size={16} /> View Borrower
+            <User size={17} /> 👤 1. Wasifu wa Mkopaji (Profile)
           </button>
 
           <button 
             onClick={() => setActiveTab('STATEMENT')}
-            style={{ background: activeTab === 'STATEMENT' ? '#0284C7' : '#FFFFFF', color: activeTab === 'STATEMENT' ? '#FFFFFF' : '#0F172A', border: activeTab === 'STATEMENT' ? '2px solid #0284C7' : '1.5px solid #CBD5E1', padding: '0.6rem 1.25rem', borderRadius: '9999px', fontWeight: '900', fontSize: '0.85rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.4rem' }}
+            style={{ 
+              background: activeTab === 'STATEMENT' ? '#B8860B' : '#FFFFFF', 
+              color: activeTab === 'STATEMENT' ? '#FFFFFF' : '#0F172A', 
+              border: activeTab === 'STATEMENT' ? '2px solid #B8860B' : '1.5px solid #94A3B8', 
+              padding: '0.65rem 1.25rem', 
+              borderRadius: '12px', 
+              fontWeight: '900', 
+              fontSize: '0.88rem', 
+              cursor: 'pointer', 
+              display: 'inline-flex', 
+              alignItems: 'center', 
+              gap: '0.45rem',
+              whiteSpace: 'nowrap',
+              flexShrink: 0,
+              boxShadow: activeTab === 'STATEMENT' ? '0 4px 12px rgba(184, 134, 11, 0.35)' : '0 1px 3px rgba(0,0,0,0.06)'
+            }}
           >
-            <FileText size={16} /> Borrower Statement
+            <FileText size={17} /> 📊 2. Taarifa ya Mkopo (Statement)
           </button>
 
           <button 
             onClick={() => setActiveTab('GUARANTORS')}
-            style={{ background: activeTab === 'GUARANTORS' ? '#0284C7' : '#FFFFFF', color: activeTab === 'GUARANTORS' ? '#FFFFFF' : '#0F172A', border: activeTab === 'GUARANTORS' ? '2px solid #0284C7' : '1.5px solid #CBD5E1', padding: '0.6rem 1.25rem', borderRadius: '9999px', fontWeight: '900', fontSize: '0.85rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.4rem' }}
+            style={{ 
+              background: activeTab === 'GUARANTORS' ? '#7C3AED' : '#FFFFFF', 
+              color: activeTab === 'GUARANTORS' ? '#FFFFFF' : '#0F172A', 
+              border: activeTab === 'GUARANTORS' ? '2px solid #7C3AED' : '1.5px solid #94A3B8', 
+              padding: '0.65rem 1.25rem', 
+              borderRadius: '12px', 
+              fontWeight: '900', 
+              fontSize: '0.88rem', 
+              cursor: 'pointer', 
+              display: 'inline-flex', 
+              alignItems: 'center', 
+              gap: '0.45rem',
+              whiteSpace: 'nowrap',
+              flexShrink: 0,
+              boxShadow: activeTab === 'GUARANTORS' ? '0 4px 12px rgba(124, 58, 237, 0.35)' : '0 1px 3px rgba(0,0,0,0.06)'
+            }}
           >
-            <Users size={16} /> Guarantors (Wadhamini)
+            <Users size={17} /> 👥 3. Wadhamini (Guarantors)
           </button>
 
           <button 
             onClick={() => setActiveTab('DOCUMENTS')}
-            style={{ background: activeTab === 'DOCUMENTS' ? '#0284C7' : '#FFFFFF', color: activeTab === 'DOCUMENTS' ? '#FFFFFF' : '#0F172A', border: activeTab === 'DOCUMENTS' ? '2px solid #0284C7' : '1.5px solid #CBD5E1', padding: '0.6rem 1.25rem', borderRadius: '9999px', fontWeight: '900', fontSize: '0.85rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.4rem' }}
+            style={{ 
+              background: activeTab === 'DOCUMENTS' ? '#0F172A' : '#FFFFFF', 
+              color: activeTab === 'DOCUMENTS' ? '#FFFFFF' : '#0F172A', 
+              border: activeTab === 'DOCUMENTS' ? '2px solid #0F172A' : '1.5px solid #94A3B8', 
+              padding: '0.65rem 1.25rem', 
+              borderRadius: '12px', 
+              fontWeight: '900', 
+              fontSize: '0.88rem', 
+              cursor: 'pointer', 
+              display: 'inline-flex', 
+              alignItems: 'center', 
+              gap: '0.45rem',
+              whiteSpace: 'nowrap',
+              flexShrink: 0,
+              boxShadow: activeTab === 'DOCUMENTS' ? '0 4px 12px rgba(15, 23, 42, 0.35)' : '0 1px 3px rgba(0,0,0,0.06)'
+            }}
           >
-            <FileCheck size={16} /> Document Vault
+            <FileCheck size={17} /> 📁 4. Nyaraka (Document Vault)
           </button>
 
           <button 
             onClick={() => setActiveTab('REPORT')}
-            style={{ background: activeTab === 'REPORT' ? '#0284C7' : '#FFFFFF', color: activeTab === 'REPORT' ? '#FFFFFF' : '#0F172A', border: activeTab === 'REPORT' ? '2px solid #0284C7' : '1.5px solid #CBD5E1', padding: '0.6rem 1.25rem', borderRadius: '9999px', fontWeight: '900', fontSize: '0.85rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.4rem' }}
+            style={{ 
+              background: activeTab === 'REPORT' ? '#059669' : '#FFFFFF', 
+              color: activeTab === 'REPORT' ? '#FFFFFF' : '#0F172A', 
+              border: activeTab === 'REPORT' ? '2px solid #059669' : '1.5px solid #94A3B8', 
+              padding: '0.65rem 1.25rem', 
+              borderRadius: '12px', 
+              fontWeight: '900', 
+              fontSize: '0.88rem', 
+              cursor: 'pointer', 
+              display: 'inline-flex', 
+              alignItems: 'center', 
+              gap: '0.45rem',
+              whiteSpace: 'nowrap',
+              flexShrink: 0,
+              boxShadow: activeTab === 'REPORT' ? '0 4px 12px rgba(5, 150, 105, 0.35)' : '0 1px 3px rgba(0,0,0,0.06)'
+            }}
           >
-            <Award size={16} /> Borrower Report
+            <Award size={17} /> 🏆 5. Ripoti (Borrower Report)
           </button>
         </div>
 

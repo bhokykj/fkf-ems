@@ -121,41 +121,116 @@ export default function LoanFullViewModal({ loan, currentUser, onClose, initialT
           </button>
         </div>
 
-        {/* NAVIGATION SUB-TABS */}
-        <div style={{ display: 'flex', borderBottom: '2px solid #CBD5E1', background: '#F8FAFC', padding: '0.65rem 1.5rem', gap: '0.6rem', overflowX: 'auto' }}>
+        {/* NAVIGATION SUB-TABS (HIGH CONTRAST & NEVER SQUEEZED) */}
+        <div style={{ display: 'flex', flexWrap: 'wrap', alignItems: 'center', borderBottom: '2px solid #CBD5E1', background: '#F1F5F9', padding: '0.85rem 1.5rem', gap: '0.65rem' }}>
           <button 
             onClick={() => setActiveTab('DETAILS')}
-            style={{ padding: '0.65rem 1.35rem', border: activeTab === 'DETAILS' ? '2px solid #0284C7' : '1.5px solid #CBD5E1', background: activeTab === 'DETAILS' ? '#0284C7' : '#FFFFFF', color: activeTab === 'DETAILS' ? '#FFFFFF' : '#0F172A', borderRadius: '10px', fontWeight: '900', fontSize: '0.88rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.45rem' }}
+            style={{ 
+              padding: '0.65rem 1.25rem', 
+              border: activeTab === 'DETAILS' ? '2px solid #0284C7' : '1.5px solid #94A3B8', 
+              background: activeTab === 'DETAILS' ? '#0284C7' : '#FFFFFF', 
+              color: activeTab === 'DETAILS' ? '#FFFFFF' : '#0F172A', 
+              borderRadius: '12px', 
+              fontWeight: '900', 
+              fontSize: '0.88rem', 
+              cursor: 'pointer', 
+              display: 'inline-flex', 
+              alignItems: 'center', 
+              gap: '0.45rem',
+              whiteSpace: 'nowrap',
+              flexShrink: 0,
+              boxShadow: activeTab === 'DETAILS' ? '0 4px 12px rgba(2, 132, 199, 0.35)' : '0 1px 3px rgba(0,0,0,0.06)'
+            }}
           >
-            <FileText size={16} /> View Loan Details
+            <FileText size={17} /> 📋 1. Taarifa za Mkopo (Details)
           </button>
 
           <button 
             onClick={() => setActiveTab('CONTRACT')}
-            style={{ padding: '0.65rem 1.35rem', border: activeTab === 'CONTRACT' ? '2px solid #0284C7' : '1.5px solid #CBD5E1', background: activeTab === 'CONTRACT' ? '#0284C7' : '#FFFFFF', color: activeTab === 'CONTRACT' ? '#FFFFFF' : '#0F172A', borderRadius: '10px', fontWeight: '900', fontSize: '0.88rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.45rem' }}
+            style={{ 
+              padding: '0.65rem 1.25rem', 
+              border: activeTab === 'CONTRACT' ? '2px solid #7C3AED' : '1.5px solid #94A3B8', 
+              background: activeTab === 'CONTRACT' ? '#7C3AED' : '#FFFFFF', 
+              color: activeTab === 'CONTRACT' ? '#FFFFFF' : '#0F172A', 
+              borderRadius: '12px', 
+              fontWeight: '900', 
+              fontSize: '0.88rem', 
+              cursor: 'pointer', 
+              display: 'inline-flex', 
+              alignItems: 'center', 
+              gap: '0.45rem',
+              whiteSpace: 'nowrap',
+              flexShrink: 0,
+              boxShadow: activeTab === 'CONTRACT' ? '0 4px 12px rgba(124, 58, 237, 0.35)' : '0 1px 3px rgba(0,0,0,0.06)'
+            }}
           >
-            <FileCheck size={16} /> Loan Contract
+            <FileCheck size={17} /> 📄 2. Mkataba (Loan Contract)
           </button>
 
           <button 
             onClick={() => setActiveTab('REMINDER')}
-            style={{ padding: '0.65rem 1.35rem', border: activeTab === 'REMINDER' ? '2px solid #0284C7' : '1.5px solid #CBD5E1', background: activeTab === 'REMINDER' ? '#0284C7' : '#FFFFFF', color: activeTab === 'REMINDER' ? '#FFFFFF' : '#0F172A', borderRadius: '10px', fontWeight: '900', fontSize: '0.88rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.45rem' }}
+            style={{ 
+              padding: '0.65rem 1.25rem', 
+              border: activeTab === 'REMINDER' ? '2px solid #059669' : '1.5px solid #94A3B8', 
+              background: activeTab === 'REMINDER' ? '#059669' : '#FFFFFF', 
+              color: activeTab === 'REMINDER' ? '#FFFFFF' : '#0F172A', 
+              borderRadius: '12px', 
+              fontWeight: '900', 
+              fontSize: '0.88rem', 
+              cursor: 'pointer', 
+              display: 'inline-flex', 
+              alignItems: 'center', 
+              gap: '0.45rem',
+              whiteSpace: 'nowrap',
+              flexShrink: 0,
+              boxShadow: activeTab === 'REMINDER' ? '0 4px 12px rgba(5, 150, 105, 0.35)' : '0 1px 3px rgba(0,0,0,0.06)'
+            }}
           >
-            <Bell size={16} /> Loan Reminder (SMS)
+            <Bell size={17} /> 📱 3. Kumbusho la SMS
           </button>
 
           <button 
             onClick={() => setActiveTab('COMMENTS')}
-            style={{ padding: '0.65rem 1.35rem', border: activeTab === 'COMMENTS' ? '2px solid #0284C7' : '1.5px solid #CBD5E1', background: activeTab === 'COMMENTS' ? '#0284C7' : '#FFFFFF', color: activeTab === 'COMMENTS' ? '#FFFFFF' : '#0F172A', borderRadius: '10px', fontWeight: '900', fontSize: '0.88rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.45rem' }}
+            style={{ 
+              padding: '0.65rem 1.25rem', 
+              border: activeTab === 'COMMENTS' ? '2px solid #D97706' : '1.5px solid #94A3B8', 
+              background: activeTab === 'COMMENTS' ? '#D97706' : '#FFFFFF', 
+              color: activeTab === 'COMMENTS' ? '#FFFFFF' : '#0F172A', 
+              borderRadius: '12px', 
+              fontWeight: '900', 
+              fontSize: '0.88rem', 
+              cursor: 'pointer', 
+              display: 'inline-flex', 
+              alignItems: 'center', 
+              gap: '0.45rem',
+              whiteSpace: 'nowrap',
+              flexShrink: 0,
+              boxShadow: activeTab === 'COMMENTS' ? '0 4px 12px rgba(217, 119, 6, 0.35)' : '0 1px 3px rgba(0,0,0,0.06)'
+            }}
           >
-            <MessageSquare size={16} /> Loan Comments ({commentsList.length})
+            <MessageSquare size={17} /> 💬 4. Maoni ({commentsList.length})
           </button>
 
           <button 
             onClick={() => setActiveTab('CALCULATOR')}
-            style={{ padding: '0.65rem 1.35rem', border: activeTab === 'CALCULATOR' ? '2px solid #0284C7' : '1.5px solid #CBD5E1', background: activeTab === 'CALCULATOR' ? '#0284C7' : '#FFFFFF', color: activeTab === 'CALCULATOR' ? '#FFFFFF' : '#0F172A', borderRadius: '10px', fontWeight: '900', fontSize: '0.88rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.45rem' }}
+            style={{ 
+              padding: '0.65rem 1.25rem', 
+              border: activeTab === 'CALCULATOR' ? '2px solid #B8860B' : '1.5px solid #94A3B8', 
+              background: activeTab === 'CALCULATOR' ? 'linear-gradient(135deg, #D4AF37 0%, #B8860B 100%)' : '#FFFFFF', 
+              color: activeTab === 'CALCULATOR' ? '#000000' : '#0F172A', 
+              borderRadius: '12px', 
+              fontWeight: '900', 
+              fontSize: '0.88rem', 
+              cursor: 'pointer', 
+              display: 'inline-flex', 
+              alignItems: 'center', 
+              gap: '0.45rem',
+              whiteSpace: 'nowrap',
+              flexShrink: 0,
+              boxShadow: activeTab === 'CALCULATOR' ? '0 4px 12px rgba(184, 134, 11, 0.35)' : '0 1px 3px rgba(0,0,0,0.06)'
+            }}
           >
-            <Calculator size={16} /> Loan Calculator
+            <Calculator size={17} /> 🧮 5. Kikokotoo cha Riba
           </button>
         </div>
 
