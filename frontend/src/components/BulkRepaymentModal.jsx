@@ -65,11 +65,11 @@ export default function BulkRepaymentModal({ loans, onClose, onRecordRepayment }
               <Layers size={18} />
             </div>
             <div>
-              <h3 style={{ fontSize: '1.15rem', fontWeight: '800', color: '#0F172A', margin: 0 }}>Add Bulk Repayments (Marejesho ya Pamoja / Kikundi)</h3>
-              <p style={{ fontSize: '0.78rem', color: '#64748B', margin: 0 }}>Ingiza marejesho ya wakopaji wengi kwa mara moja</p>
+              <h3 style={{ fontSize: '1.15rem', fontWeight: '900', color: '#0F172A', margin: 0 }}>Add Bulk Repayments (Marejesho ya Pamoja / Kikundi)</h3>
+              <p style={{ fontSize: '0.82rem', color: '#334155', margin: '0.15rem 0 0 0', fontWeight: '700' }}>Ingiza marejesho ya wakopaji wengi kwa mara moja</p>
             </div>
           </div>
-          <button onClick={onClose} style={{ background: 'transparent', border: 'none', color: '#64748B', cursor: 'pointer' }}>
+          <button onClick={onClose} style={{ background: '#F1F5F9', border: '1px solid #CBD5E1', color: '#0F172A', cursor: 'pointer', borderRadius: '8px', padding: '0.35rem', display: 'flex', alignItems: 'center' }}>
             <X size={20} />
           </button>
         </div>

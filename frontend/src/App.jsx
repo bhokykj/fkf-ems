@@ -1075,9 +1075,19 @@ export default function App() {
 
 
 
-  const pendingApprovalsCount = safeLoans.filter(l => l.status === 'PENDING_BRANCH_APPROVAL' || l.status === 'PENDING_RISK_REVIEW').length;
-  const activeDisbursedCount = safeLoans.filter(l => l.status === 'DISBURSED').length;
-  const totalCollectionsTSH = safeLoans.reduce((acc, l) => acc + (parseFloat(l.total_payable || 0) - parseFloat(l.balance_remaining || 0)), 0);
+  const isOfficer = currentUser?.role === 'LOAN_OFFICER' || currentUser?.role === 'FIELD_OFFICER';
+
+  const scopedBorrowers = isOfficer
+    ? safeBorrowers.filter(b => b.created_by_officer_id && String(b.created_by_officer_id) === String(currentUser?.id))
+    : safeBorrowers;
+
+  const scopedLoans = isOfficer
+    ? safeLoans.filter(l => l.created_by_officer_id && String(l.created_by_officer_id) === String(currentUser?.id))
+    : safeLoans;
+
+  const pendingApprovalsCount = scopedLoans.filter(l => l.status === 'PENDING_BRANCH_APPROVAL' || l.status === 'PENDING_RISK_REVIEW').length;
+  const activeDisbursedCount = scopedLoans.filter(l => l.status === 'DISBURSED').length;
+  const totalCollectionsTSH = scopedLoans.reduce((acc, l) => acc + (parseFloat(l.total_payable || 0) - parseFloat(l.balance_remaining || 0)), 0);
 
   const initialFirst = currentUser?.first_name ? currentUser.first_name[0] : 'U';
   const initialLast = currentUser?.last_name ? currentUser.last_name[0] : 'A';
@@ -1339,78 +1349,78 @@ export default function App() {
                   </div>
                 </div>
 
-                {/* STAT SUMMARY CARDS GRID (EXACTLY MATCHING LAPTOP PHOTO) */}
+                {/* STAT SUMMARY CARDS GRID (HIGH CONTRAST & ACCESSIBLE) */}
                 <div className="stat-summary-grid">
                   
                   {/* Card 1: WAKOPAJI WALIO-ACTIVE */}
-                  <div className="stat-card-white">
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
-                      <span style={{ fontSize: '0.72rem', fontWeight: '800', color: '#64748B', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                  <div className="stat-card-white" style={{ borderLeft: '5px solid #0D9488' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+                      <span style={{ fontSize: '0.8rem', fontWeight: '900', color: '#0F172A', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
                         WAKOPAJI WALIO-ACTIVE
                       </span>
-                      <div style={{ fontSize: '1.8rem', fontWeight: '900', color: '#0F172A' }}>
-                        {safeBorrowers.length}
+                      <div style={{ fontSize: '2.2rem', fontWeight: '900', color: '#0F172A', letterSpacing: '-0.03em' }}>
+                        {scopedBorrowers.length}
                       </div>
-                      <span style={{ fontSize: '0.75rem', color: '#059669', fontWeight: '600', display: 'flex', alignItems: 'center', gap: '0.2rem' }}>
-                        <CheckCheck size={14} /> Iliyoingizwa NIDA
+                      <span style={{ fontSize: '0.8rem', color: '#047857', fontWeight: '800', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                        <CheckCheck size={16} /> Waliosajiliwa NIDA / Hai
                       </span>
                     </div>
-                    <div className="stat-icon-circle" style={{ background: '#E6FFFA', color: '#0D9488' }}>
-                      <Users size={24} />
+                    <div className="stat-icon-circle" style={{ background: '#CCFBF1', color: '#0F766E' }}>
+                      <Users size={28} />
                     </div>
                   </div>
 
                   {/* Card 2: MIKOPO YENYE REJESHO */}
-                  <div className="stat-card-white">
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
-                      <span style={{ fontSize: '0.72rem', fontWeight: '800', color: '#64748B', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
+                  <div className="stat-card-white" style={{ borderLeft: '5px solid #0284C7' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+                      <span style={{ fontSize: '0.8rem', fontWeight: '900', color: '#0F172A', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
                         MIKOPO YENYE REJESHO
                       </span>
-                      <div style={{ fontSize: '1.8rem', fontWeight: '900', color: '#0F172A' }}>
+                      <div style={{ fontSize: '2.2rem', fontWeight: '900', color: '#0284C7', letterSpacing: '-0.03em' }}>
                         {activeDisbursedCount}
                       </div>
-                      <span style={{ fontSize: '0.75rem', color: '#0284C7', fontWeight: '600' }}>
-                        Mikopo Hai Tanzania TSH
+                      <span style={{ fontSize: '0.8rem', color: '#0369A1', fontWeight: '800' }}>
+                        Mikopo Hai Inayorejeshwa
                       </span>
                     </div>
                     <div className="stat-icon-circle" style={{ background: '#E0F2FE', color: '#0284C7' }}>
-                      <FileText size={24} />
+                      <FileText size={28} />
                     </div>
                   </div>
 
                   {/* Card 3: MAKUSANYO YA BENKI & SIMU */}
-                  <div className="stat-card-white">
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
-                      <span style={{ fontSize: '0.72rem', fontWeight: '800', color: '#64748B', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                        MAKUSANYO YA BENKI & SIMU
+                  <div className="stat-card-white" style={{ borderLeft: '5px solid #B8860B' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+                      <span style={{ fontSize: '0.8rem', fontWeight: '900', color: '#0F172A', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                        MAKUSANYO YA MAREJESHO
                       </span>
-                      <div style={{ fontSize: '1.45rem', fontWeight: '900', color: '#B8860B' }}>
-                        TZS {totalCollectionsTSH.toLocaleString()}
+                      <div style={{ fontSize: '1.65rem', fontWeight: '900', color: '#B8860B', letterSpacing: '-0.02em' }}>
+                        TZS {Math.round(totalCollectionsTSH).toLocaleString()}
                       </div>
-                      <span style={{ fontSize: '0.75rem', color: '#64748B', fontWeight: '600' }}>
-                        Vodacom M-Pesa & Selcom API
+                      <span style={{ fontSize: '0.8rem', color: '#78350F', fontWeight: '800' }}>
+                        M-Pesa, Tigo, Airtel & Benki
                       </span>
                     </div>
                     <div className="stat-icon-circle" style={{ background: '#FEF3C7', color: '#B8860B' }}>
-                      <Wallet size={24} />
+                      <Wallet size={28} />
                     </div>
                   </div>
 
-                  {/* Card 4: MAOMBI ZINAZOSUBIRI */}
-                  <div className="stat-card-white">
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.3rem' }}>
-                      <span style={{ fontSize: '0.72rem', fontWeight: '800', color: '#64748B', textTransform: 'uppercase', letterSpacing: '0.05em' }}>
-                        MAOMBI ZINAZOSUBIRI
+                  {/* Card 4: MAOMBI YANAYOSUBIRI */}
+                  <div className="stat-card-white" style={{ borderLeft: '5px solid #D97706' }}>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: '0.35rem' }}>
+                      <span style={{ fontSize: '0.8rem', fontWeight: '900', color: '#0F172A', textTransform: 'uppercase', letterSpacing: '0.04em' }}>
+                        MAOMBI YANAYOSUBIRI
                       </span>
-                      <div style={{ fontSize: '1.8rem', fontWeight: '900', color: '#0F172A' }}>
+                      <div style={{ fontSize: '2.2rem', fontWeight: '900', color: '#D97706', letterSpacing: '-0.03em' }}>
                         {pendingApprovalsCount}
                       </div>
-                      <span style={{ fontSize: '0.75rem', color: '#D97706', fontWeight: '600' }}>
-                        Zinazosubiri uidhinishaji
+                      <span style={{ fontSize: '0.8rem', color: '#B45309', fontWeight: '800' }}>
+                        Branch / Risk / Super Admin
                       </span>
                     </div>
-                    <div className="stat-icon-circle" style={{ background: '#F3E8FF', color: '#7C3AED' }}>
-                      <CheckCircle2 size={24} />
+                    <div className="stat-icon-circle" style={{ background: '#FFEDD5', color: '#EA580C' }}>
+                      <CheckCircle2 size={28} />
                     </div>
                   </div>
 

@@ -122,38 +122,38 @@ export default function LoanFullViewModal({ loan, currentUser, onClose, initialT
         </div>
 
         {/* NAVIGATION SUB-TABS */}
-        <div style={{ display: 'flex', borderBottom: '1px solid #E2E8F0', background: '#F8FAFC', padding: '0.5rem 1.5rem', gap: '0.5rem', overflowX: 'auto' }}>
+        <div style={{ display: 'flex', borderBottom: '2px solid #CBD5E1', background: '#F8FAFC', padding: '0.65rem 1.5rem', gap: '0.6rem', overflowX: 'auto' }}>
           <button 
             onClick={() => setActiveTab('DETAILS')}
-            style={{ padding: '0.6rem 1.25rem', border: 'none', background: activeTab === 'DETAILS' ? '#0284C7' : 'transparent', color: activeTab === 'DETAILS' ? '#FFFFFF' : '#64748B', borderRadius: '10px', fontWeight: '800', fontSize: '0.85rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.4rem' }}
+            style={{ padding: '0.65rem 1.35rem', border: activeTab === 'DETAILS' ? '2px solid #0284C7' : '1.5px solid #CBD5E1', background: activeTab === 'DETAILS' ? '#0284C7' : '#FFFFFF', color: activeTab === 'DETAILS' ? '#FFFFFF' : '#0F172A', borderRadius: '10px', fontWeight: '900', fontSize: '0.88rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.45rem' }}
           >
             <FileText size={16} /> View Loan Details
           </button>
 
           <button 
             onClick={() => setActiveTab('CONTRACT')}
-            style={{ padding: '0.6rem 1.25rem', border: 'none', background: activeTab === 'CONTRACT' ? '#0284C7' : 'transparent', color: activeTab === 'CONTRACT' ? '#FFFFFF' : '#64748B', borderRadius: '10px', fontWeight: '800', fontSize: '0.85rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.4rem' }}
+            style={{ padding: '0.65rem 1.35rem', border: activeTab === 'CONTRACT' ? '2px solid #0284C7' : '1.5px solid #CBD5E1', background: activeTab === 'CONTRACT' ? '#0284C7' : '#FFFFFF', color: activeTab === 'CONTRACT' ? '#FFFFFF' : '#0F172A', borderRadius: '10px', fontWeight: '900', fontSize: '0.88rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.45rem' }}
           >
             <FileCheck size={16} /> Loan Contract
           </button>
 
           <button 
             onClick={() => setActiveTab('REMINDER')}
-            style={{ padding: '0.6rem 1.25rem', border: 'none', background: activeTab === 'REMINDER' ? '#0284C7' : 'transparent', color: activeTab === 'REMINDER' ? '#FFFFFF' : '#64748B', borderRadius: '10px', fontWeight: '800', fontSize: '0.85rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.4rem' }}
+            style={{ padding: '0.65rem 1.35rem', border: activeTab === 'REMINDER' ? '2px solid #0284C7' : '1.5px solid #CBD5E1', background: activeTab === 'REMINDER' ? '#0284C7' : '#FFFFFF', color: activeTab === 'REMINDER' ? '#FFFFFF' : '#0F172A', borderRadius: '10px', fontWeight: '900', fontSize: '0.88rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.45rem' }}
           >
             <Bell size={16} /> Loan Reminder (SMS)
           </button>
 
           <button 
             onClick={() => setActiveTab('COMMENTS')}
-            style={{ padding: '0.6rem 1.25rem', border: 'none', background: activeTab === 'COMMENTS' ? '#0284C7' : 'transparent', color: activeTab === 'COMMENTS' ? '#FFFFFF' : '#64748B', borderRadius: '10px', fontWeight: '800', fontSize: '0.85rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.4rem' }}
+            style={{ padding: '0.65rem 1.35rem', border: activeTab === 'COMMENTS' ? '2px solid #0284C7' : '1.5px solid #CBD5E1', background: activeTab === 'COMMENTS' ? '#0284C7' : '#FFFFFF', color: activeTab === 'COMMENTS' ? '#FFFFFF' : '#0F172A', borderRadius: '10px', fontWeight: '900', fontSize: '0.88rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.45rem' }}
           >
             <MessageSquare size={16} /> Loan Comments ({commentsList.length})
           </button>
 
           <button 
             onClick={() => setActiveTab('CALCULATOR')}
-            style={{ padding: '0.6rem 1.25rem', border: 'none', background: activeTab === 'CALCULATOR' ? '#0284C7' : 'transparent', color: activeTab === 'CALCULATOR' ? '#FFFFFF' : '#64748B', borderRadius: '10px', fontWeight: '800', fontSize: '0.85rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.4rem' }}
+            style={{ padding: '0.65rem 1.35rem', border: activeTab === 'CALCULATOR' ? '2px solid #0284C7' : '1.5px solid #CBD5E1', background: activeTab === 'CALCULATOR' ? '#0284C7' : '#FFFFFF', color: activeTab === 'CALCULATOR' ? '#FFFFFF' : '#0F172A', borderRadius: '10px', fontWeight: '900', fontSize: '0.88rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.45rem' }}
           >
             <Calculator size={16} /> Loan Calculator
           </button>
@@ -168,30 +168,30 @@ export default function LoanFullViewModal({ loan, currentUser, onClose, initialT
               
               {/* Financial Stats Grid */}
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
-                <div style={{ background: '#F8FAFC', border: '1px solid #CBD5E1', padding: '1rem', borderRadius: '14px' }}>
-                  <div style={{ fontSize: '0.75rem', fontWeight: '800', color: '#64748B' }}>KIASI CHA MKOPO (PRINCIPAL)</div>
-                  <div style={{ fontSize: '1.4rem', fontWeight: '900', color: '#0F172A', marginTop: '0.2rem' }}>
+                <div style={{ background: '#FFFFFF', border: '1.5px solid #CBD5E1', borderLeft: '5px solid #0F172A', padding: '1.1rem', borderRadius: '14px' }}>
+                  <div style={{ fontSize: '0.8rem', fontWeight: '900', color: '#0F172A', textTransform: 'uppercase' }}>KIASI CHA MKOPO (PRINCIPAL)</div>
+                  <div style={{ fontSize: '1.5rem', fontWeight: '900', color: '#0F172A', marginTop: '0.25rem' }}>
                     TSH {principal.toLocaleString()}
                   </div>
                 </div>
 
-                <div style={{ background: '#FEF3C7', border: '1px solid #FCD34D', padding: '1rem', borderRadius: '14px' }}>
-                  <div style={{ fontSize: '0.75rem', fontWeight: '800', color: '#B8860B' }}>RIBA YA TAWI ({loan.interest_rate_pct}%)</div>
-                  <div style={{ fontSize: '1.4rem', fontWeight: '900', color: '#B8860B', marginTop: '0.2rem' }}>
+                <div style={{ background: '#FEF3C7', border: '1.5px solid #FCD34D', borderLeft: '5px solid #B8860B', padding: '1.1rem', borderRadius: '14px' }}>
+                  <div style={{ fontSize: '0.8rem', fontWeight: '900', color: '#78350F', textTransform: 'uppercase' }}>RIBA YA TAWI ({loan.interest_rate_pct}%)</div>
+                  <div style={{ fontSize: '1.5rem', fontWeight: '900', color: '#B8860B', marginTop: '0.25rem' }}>
                     TSH {interest.toLocaleString()}
                   </div>
                 </div>
 
-                <div style={{ background: '#ECFDF5', border: '1px solid #A7F3D0', padding: '1rem', borderRadius: '14px' }}>
-                  <div style={{ fontSize: '0.75rem', fontWeight: '800', color: '#047857' }}>JUMLA YA KURUDISHA</div>
-                  <div style={{ fontSize: '1.4rem', fontWeight: '900', color: '#047857', marginTop: '0.2rem' }}>
+                <div style={{ background: '#DCFCE7', border: '1.5px solid #86EFAC', borderLeft: '5px solid #059669', padding: '1.1rem', borderRadius: '14px' }}>
+                  <div style={{ fontSize: '0.8rem', fontWeight: '900', color: '#14532D', textTransform: 'uppercase' }}>JUMLA YA KURUDISHA</div>
+                  <div style={{ fontSize: '1.5rem', fontWeight: '900', color: '#047857', marginTop: '0.25rem' }}>
                     TSH {totalPayable.toLocaleString()}
                   </div>
                 </div>
 
-                <div style={{ background: '#EFF6FF', border: '1px solid #93C5FD', padding: '1rem', borderRadius: '14px' }}>
-                  <div style={{ fontSize: '0.75rem', fontWeight: '800', color: '#1E40AF' }}>SALIO LILILOBAKI</div>
-                  <div style={{ fontSize: '1.4rem', fontWeight: '900', color: '#1E40AF', marginTop: '0.2rem' }}>
+                <div style={{ background: '#E0F2FE', border: '1.5px solid #7DD3FC', borderLeft: '5px solid #0284C7', padding: '1.1rem', borderRadius: '14px' }}>
+                  <div style={{ fontSize: '0.8rem', fontWeight: '900', color: '#0C4A6E', textTransform: 'uppercase' }}>SALIO LILILOBAKI</div>
+                  <div style={{ fontSize: '1.5rem', fontWeight: '900', color: '#0284C7', marginTop: '0.25rem' }}>
                     TSH {balance.toLocaleString()}
                   </div>
                 </div>

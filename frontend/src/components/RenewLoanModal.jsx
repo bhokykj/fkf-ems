@@ -55,21 +55,21 @@ export default function RenewLoanModal({ loan, onClose, onRenew }) {
 
         <form onSubmit={handleSubmit} style={{ padding: '1.5rem', display: 'flex', flexDirection: 'column', gap: '1.1rem' }}>
           
-          <div style={{ background: '#ECFDF5', border: '1px solid #A7F3D0', borderRadius: '12px', padding: '1rem', color: '#065F46', fontSize: '0.85rem' }}>
-            <div style={{ fontWeight: '800', marginBottom: '0.3rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
+          <div style={{ background: '#ECFDF5', border: '1.5px solid #86EFAC', borderRadius: '12px', padding: '1rem', color: '#065F46', fontSize: '0.85rem' }}>
+            <div style={{ fontWeight: '900', marginBottom: '0.35rem', display: 'flex', alignItems: 'center', gap: '0.4rem' }}>
               <ShieldCheck size={18} color="#059669" /> Jinsi Renewal Inavyofanya Kazi:
             </div>
-            <span>Mteja analipa **Riba ya Mkopo pekee** (TZS {parseFloat(interestAmount).toLocaleString()}). Baada ya malipo haya, mkopo utaongezewa muda wa mwezi mwingine upya na salio litarudi mwanzo bila mteja kuomba mkopo mpya!</span>
+            <span style={{ fontWeight: '600' }}>Mteja analipa <strong style={{ color: '#047857' }}>Riba ya Mkopo pekee</strong> (TZS {parseFloat(interestAmount || 0).toLocaleString()}). Baada ya malipo haya, mkopo utaongezewa muda wa mwezi mwingine upya na salio litarudi mwanzo bila mteja kuomba mkopo mpya!</span>
           </div>
 
-          <div style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', borderRadius: '12px', padding: '1rem', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
+          <div style={{ background: '#F8FAFC', border: '1.5px solid #CBD5E1', borderRadius: '12px', padding: '1rem', display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '0.75rem' }}>
             <div>
-              <span style={{ fontSize: '0.72rem', color: '#64748B', fontWeight: '700', textTransform: 'uppercase' }}>Kiasi cha Mkopo (Principal)</span>
-              <div style={{ fontSize: '1rem', fontWeight: '900', color: '#0F172A' }}>TZS {principal.toLocaleString()}</div>
+              <span style={{ fontSize: '0.75rem', color: '#0F172A', fontWeight: '900', textTransform: 'uppercase' }}>Kiasi cha Mkopo (Principal)</span>
+              <div style={{ fontSize: '1.15rem', fontWeight: '900', color: '#0F172A', marginTop: '0.2rem' }}>TZS {principal.toLocaleString()}</div>
             </div>
             <div>
-              <span style={{ fontSize: '0.72rem', color: '#64748B', fontWeight: '700', textTransform: 'uppercase' }}>Kiwango cha Riba</span>
-              <div style={{ fontSize: '1rem', fontWeight: '900', color: '#B8860B' }}>{rate}% ({loan.tenure_months} Miezi)</div>
+              <span style={{ fontSize: '0.75rem', color: '#78350F', fontWeight: '900', textTransform: 'uppercase' }}>Kiwango cha Riba</span>
+              <div style={{ fontSize: '1.15rem', fontWeight: '900', color: '#B8860B', marginTop: '0.2rem' }}>{rate}% ({loan.tenure_months} Miezi)</div>
             </div>
           </div>
 

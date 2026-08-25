@@ -289,36 +289,36 @@ export default function BorrowerPortalHub({ currentUser, loans, borrowers, branc
           {/* TOP METRIC CARDS */}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: '1.25rem' }}>
             
-            <div style={{ background: '#FFFFFF', border: '1px solid #CBD5E1', borderRadius: '18px', padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.5rem', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)' }}>
-              <span style={{ fontSize: '0.78rem', color: '#64748B', fontWeight: '700' }}>Salio la Mkopo Unaodaiwa:</span>
-              <strong style={{ fontSize: '1.5rem', fontWeight: '900', color: '#DC2626' }}>
+            <div style={{ background: '#FFFFFF', border: '1.5px solid #CBD5E1', borderLeft: '5px solid #DC2626', borderRadius: '18px', padding: '1.35rem', display: 'flex', flexDirection: 'column', gap: '0.4rem', boxShadow: '0 4px 14px rgba(0, 0, 0, 0.04)' }}>
+              <span style={{ fontSize: '0.82rem', color: '#0F172A', fontWeight: '900', textTransform: 'uppercase' }}>Salio la Mkopo Unaodaiwa:</span>
+              <strong style={{ fontSize: '1.65rem', fontWeight: '900', color: '#DC2626' }}>
                 TZS {Math.round(totalBalanceRemaining).toLocaleString()}
               </strong>
-              <span style={{ fontSize: '0.72rem', color: '#94A3B8' }}>Jumla ya Salio linalobaki</span>
+              <span style={{ fontSize: '0.78rem', color: '#7F1D1D', fontWeight: '800' }}>Jumla ya Salio linalobaki</span>
             </div>
 
-            <div style={{ background: '#FFFFFF', border: '1px solid #CBD5E1', borderRadius: '18px', padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.5rem', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)' }}>
-              <span style={{ fontSize: '0.78rem', color: '#64748B', fontWeight: '700' }}>Jumla Uliyokwisha Rejesha:</span>
-              <strong style={{ fontSize: '1.5rem', fontWeight: '900', color: '#059669' }}>
+            <div style={{ background: '#FFFFFF', border: '1.5px solid #CBD5E1', borderLeft: '5px solid #059669', borderRadius: '18px', padding: '1.35rem', display: 'flex', flexDirection: 'column', gap: '0.4rem', boxShadow: '0 4px 14px rgba(0, 0, 0, 0.04)' }}>
+              <span style={{ fontSize: '0.82rem', color: '#0F172A', fontWeight: '900', textTransform: 'uppercase' }}>Jumla Uliyokwisha Rejesha:</span>
+              <strong style={{ fontSize: '1.65rem', fontWeight: '900', color: '#059669' }}>
                 TZS {Math.round(totalRepaidAmount).toLocaleString()}
               </strong>
-              <span style={{ fontSize: '0.72rem', color: '#059669', fontWeight: '700' }}>{repaymentPercentage}% Umerejesha</span>
+              <span style={{ fontSize: '0.78rem', color: '#047857', fontWeight: '800' }}>{repaymentPercentage}% Umerejesha Tayari</span>
             </div>
 
-            <div style={{ background: '#FFFFFF', border: '1px solid #CBD5E1', borderRadius: '18px', padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.5rem', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)' }}>
-              <span style={{ fontSize: '0.78rem', color: '#64748B', fontWeight: '700' }}>Jumla ya Mkopo Wako:</span>
-              <strong style={{ fontSize: '1.5rem', fontWeight: '900', color: '#0F172A' }}>
+            <div style={{ background: '#FFFFFF', border: '1.5px solid #CBD5E1', borderLeft: '5px solid #0F172A', borderRadius: '18px', padding: '1.35rem', display: 'flex', flexDirection: 'column', gap: '0.4rem', boxShadow: '0 4px 14px rgba(0, 0, 0, 0.04)' }}>
+              <span style={{ fontSize: '0.82rem', color: '#0F172A', fontWeight: '900', textTransform: 'uppercase' }}>Jumla ya Mkopo Wako:</span>
+              <strong style={{ fontSize: '1.65rem', fontWeight: '900', color: '#0F172A' }}>
                 TZS {Math.round(totalLoanPayable).toLocaleString()}
               </strong>
-              <span style={{ fontSize: '0.72rem', color: '#94A3B8' }}>Mtaji + Riba ya Mkopo</span>
+              <span style={{ fontSize: '0.78rem', color: '#334155', fontWeight: '800' }}>Mtaji + Riba ya Mkopo</span>
             </div>
 
-            <div style={{ background: '#FFFFFF', border: '1px solid #CBD5E1', borderRadius: '18px', padding: '1.25rem', display: 'flex', flexDirection: 'column', gap: '0.5rem', boxShadow: '0 4px 12px rgba(0, 0, 0, 0.05)' }}>
-              <span style={{ fontSize: '0.78rem', color: '#64748B', fontWeight: '700' }}>Hali ya Mikopo Yako:</span>
-              <strong style={{ fontSize: '1.2rem', fontWeight: '900', color: activeLoan ? '#059669' : '#64748B' }}>
+            <div style={{ background: '#FFFFFF', border: '1.5px solid #CBD5E1', borderLeft: '5px solid #0284C7', borderRadius: '18px', padding: '1.35rem', display: 'flex', flexDirection: 'column', gap: '0.4rem', boxShadow: '0 4px 14px rgba(0, 0, 0, 0.04)' }}>
+              <span style={{ fontSize: '0.82rem', color: '#0F172A', fontWeight: '900', textTransform: 'uppercase' }}>Hali ya Mikopo Yako:</span>
+              <strong style={{ fontSize: '1.25rem', fontWeight: '900', color: activeLoan ? '#047857' : '#B45309' }}>
                 {activeLoan ? activeLoan.status_display || activeLoan.status : 'Hakuna Mkopo Active'}
               </strong>
-              <span style={{ fontSize: '0.72rem', color: '#64748B' }}>{myLoans.length} Idadi ya Mikopo</span>
+              <span style={{ fontSize: '0.78rem', color: '#0369A1', fontWeight: '800' }}>{myLoans.length} Idadi ya Mikopo Jumla</span>
             </div>
 
           </div>

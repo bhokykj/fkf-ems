@@ -314,53 +314,53 @@ export default function BranchWorkflowEngine({
                       <div style={{ color: '#0F172A', fontWeight: '700' }}>{b.phone}</div>
                       <div style={{ fontSize: '0.75rem', color: '#64748B' }}>{b.email || 'Hakuna email'}</div>
                     </td>
-                    <td style={{ color: '#334155', minWidth: '220px' }}>
-                      <div style={{ fontWeight: '500' }}>{b.address || 'Nyanjani'}</div>
-                      <div style={{ display: 'flex', gap: '0.25rem', marginTop: '0.4rem', flexWrap: 'wrap' }}>
-                        <span style={{ fontSize: '0.68rem', padding: '0.15rem 0.35rem', borderRadius: '4px', background: b.field_gps_location ? '#ECFDF5' : '#F1F5F9', color: b.field_gps_location ? '#047857' : '#94A3B8', border: `1px solid ${b.field_gps_location ? '#A7F3D0' : '#E2E8F0'}`, fontWeight: '700' }} title={b.field_gps_location || 'GPS haijachukuliwa'}>
-                          📍 GPS
+                    <td style={{ color: '#0F172A', minWidth: '220px' }}>
+                      <div style={{ fontWeight: '700', fontSize: '0.88rem' }}>{b.address || 'Nyanjani'}</div>
+                      <div style={{ display: 'flex', gap: '0.35rem', marginTop: '0.45rem', flexWrap: 'wrap' }}>
+                        <span style={{ fontSize: '0.75rem', padding: '0.2rem 0.5rem', borderRadius: '6px', background: b.field_gps_location ? '#059669' : '#E2E8F0', color: b.field_gps_location ? '#FFFFFF' : '#334155', border: `1px solid ${b.field_gps_location ? '#047857' : '#CBD5E1'}`, fontWeight: '800' }} title={b.field_gps_location || 'GPS haijachukuliwa'}>
+                          📍 GPS {b.field_gps_location ? '✓' : '✗'}
                         </span>
-                        <span style={{ fontSize: '0.68rem', padding: '0.15rem 0.35rem', borderRadius: '4px', background: b.residence_photo_url ? '#ECFDF5' : '#F1F5F9', color: b.residence_photo_url ? '#047857' : '#94A3B8', border: `1px solid ${b.residence_photo_url ? '#A7F3D0' : '#E2E8F0'}`, fontWeight: '700' }}>
-                          🏠 Residence
+                        <span style={{ fontSize: '0.75rem', padding: '0.2rem 0.5rem', borderRadius: '6px', background: b.residence_photo_url ? '#059669' : '#E2E8F0', color: b.residence_photo_url ? '#FFFFFF' : '#334155', border: `1px solid ${b.residence_photo_url ? '#047857' : '#CBD5E1'}`, fontWeight: '800' }}>
+                          🏠 Makazi {b.residence_photo_url ? '✓' : '✗'}
                         </span>
-                        <span style={{ fontSize: '0.68rem', padding: '0.15rem 0.35rem', borderRadius: '4px', background: b.business_photo_url ? '#ECFDF5' : '#F1F5F9', color: b.business_photo_url ? '#047857' : '#94A3B8', border: `1px solid ${b.business_photo_url ? '#A7F3D0' : '#E2E8F0'}`, fontWeight: '700' }}>
-                          🛍️ Business
+                        <span style={{ fontSize: '0.75rem', padding: '0.2rem 0.5rem', borderRadius: '6px', background: b.business_photo_url ? '#059669' : '#E2E8F0', color: b.business_photo_url ? '#FFFFFF' : '#334155', border: `1px solid ${b.business_photo_url ? '#047857' : '#CBD5E1'}`, fontWeight: '800' }}>
+                          🛍️ Biashara {b.business_photo_url ? '✓' : '✗'}
                         </span>
-                        <span style={{ fontSize: '0.68rem', padding: '0.15rem 0.35rem', borderRadius: '4px', background: b.workplace_stand_photo_url ? '#ECFDF5' : '#F1F5F9', color: b.workplace_stand_photo_url ? '#047857' : '#94A3B8', border: `1px solid ${b.workplace_stand_photo_url ? '#A7F3D0' : '#E2E8F0'}`, fontWeight: '700' }}>
-                          🚚 Stand
+                        <span style={{ fontSize: '0.75rem', padding: '0.2rem 0.5rem', borderRadius: '6px', background: b.workplace_stand_photo_url ? '#059669' : '#E2E8F0', color: b.workplace_stand_photo_url ? '#FFFFFF' : '#334155', border: `1px solid ${b.workplace_stand_photo_url ? '#047857' : '#CBD5E1'}`, fontWeight: '800' }}>
+                          🚚 Stendi {b.workplace_stand_photo_url ? '✓' : '✗'}
                         </span>
                       </div>
                     </td>
-                    <td style={{ fontWeight: '800', color: '#059669' }}>TSH {parseFloat(b.monthly_income || 500000).toLocaleString()}</td>
+                    <td style={{ fontWeight: '900', color: '#047857', fontSize: '0.92rem' }}>TSH {parseFloat(b.monthly_income || 500000).toLocaleString()}</td>
                     <td>
-                      <button onClick={() => onVerifyKyc ? onVerifyKyc(b) : null} style={{ padding: '0.25rem 0.55rem', borderRadius: '6px', fontSize: '0.72rem', fontWeight: '800', border: 'none', cursor: 'pointer', background: b.kyc_status === 'VERIFIED' ? '#ECFDF5' : '#FEF2F2', color: b.kyc_status === 'VERIFIED' ? '#047857' : '#DC2626', display: 'flex', alignItems: 'center', gap: '0.25rem' }}>
-                        <ShieldCheck size={12} /> {b.kyc_status === 'VERIFIED' ? 'Verified (NIDA)' : 'Haja-hakikiwa'}
+                      <button onClick={() => onVerifyKyc ? onVerifyKyc(b) : null} style={{ padding: '0.35rem 0.65rem', borderRadius: '8px', fontSize: '0.78rem', fontWeight: '900', border: 'none', cursor: 'pointer', background: b.kyc_status === 'VERIFIED' ? '#059669' : '#DC2626', color: '#FFFFFF', display: 'flex', alignItems: 'center', gap: '0.3rem' }}>
+                        <ShieldCheck size={14} /> {b.kyc_status === 'VERIFIED' ? 'Verified NIDA' : 'Hakiki Sasa'}
                       </button>
                     </td>
                     <td>
-                      <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap' }}>
-                        <button onClick={() => openBorrowerModal(b, 'DETAILS')} className="btn-secondary" style={{ padding: '0.35rem 0.65rem', fontSize: '0.75rem', background: '#0284C7', color: '#FFFFFF', border: 'none' }} title="View Borrower Details">
-                          <Eye size={13} /> View
+                      <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
+                        <button onClick={() => openBorrowerModal(b, 'DETAILS')} style={{ padding: '0.4rem 0.75rem', fontSize: '0.8rem', fontWeight: '800', background: '#0284C7', color: '#FFFFFF', border: 'none', borderRadius: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.3rem' }} title="View Borrower Details">
+                          <Eye size={14} /> View
                         </button>
-                        <button onClick={() => openBorrowerModal(b, 'STATEMENT')} className="btn-secondary" style={{ padding: '0.35rem 0.65rem', fontSize: '0.75rem', background: '#B8860B', color: '#FFFFFF', border: 'none' }} title="Borrower Statement">
-                          <FileText size={13} /> Statement
+                        <button onClick={() => openBorrowerModal(b, 'STATEMENT')} style={{ padding: '0.4rem 0.75rem', fontSize: '0.8rem', fontWeight: '800', background: '#B8860B', color: '#FFFFFF', border: 'none', borderRadius: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.3rem' }} title="Borrower Statement">
+                          <FileText size={14} /> Statement
                         </button>
-                        <button onClick={() => openBorrowerModal(b, 'DOCUMENTS')} className="btn-secondary" style={{ padding: '0.35rem 0.65rem', fontSize: '0.75rem', background: '#F1F5F9', color: '#1E293B', border: '1px solid #CBD5E1' }} title="Document Vault">
-                          <Folder size={13} /> Nyaraka
+                        <button onClick={() => openBorrowerModal(b, 'DOCUMENTS')} style={{ padding: '0.4rem 0.75rem', fontSize: '0.8rem', fontWeight: '800', background: '#0F172A', color: '#FFFFFF', border: 'none', borderRadius: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.3rem' }} title="Document Vault">
+                          <Folder size={14} /> Nyaraka
                         </button>
-                        <button onClick={() => setFieldEvidenceTarget(b)} className="btn-secondary" style={{ padding: '0.35rem 0.65rem', fontSize: '0.75rem', background: '#ECFDF5', color: '#047857', border: '1px solid #6EE7B7', fontWeight: '800' }} title="FIELD GPS & Picha za Anapokaa/Biashara/Stendi">
-                          <MapPin size={13} /> 📍 Nyanjani & GPS
+                        <button onClick={() => setFieldEvidenceTarget(b)} style={{ padding: '0.4rem 0.75rem', fontSize: '0.8rem', background: '#DCFCE7', color: '#14532D', border: '1.5px solid #86EFAC', fontWeight: '900', borderRadius: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.3rem' }} title="FIELD GPS & Picha za Anapokaa/Biashara/Stendi">
+                          <MapPin size={14} /> 📍 Nyanjani & GPS
                         </button>
-                        <button onClick={() => setShowLoanModal(true)} className="btn-primary" style={{ padding: '0.35rem 0.65rem', fontSize: '0.75rem' }}>
-                          Omba Mkopo
+                        <button onClick={() => setShowLoanModal(true)} style={{ padding: '0.4rem 0.85rem', fontSize: '0.8rem', fontWeight: '900', background: 'linear-gradient(135deg, #D4AF37 0%, #B8860B 100%)', color: '#000000', border: 'none', borderRadius: '8px', cursor: 'pointer' }}>
+                          + Omba Mkopo
                         </button>
                         {currentUser?.role === 'SUPER_ADMIN' && (
                           <>
-                            <button onClick={() => setEditBorrowerTarget(b)} className="btn-secondary" style={{ padding: '0.35rem 0.65rem', fontSize: '0.75rem', background: '#FEF3C7', color: '#B8860B', border: '1px solid #FCD34D' }} title="Edit Borrower (Super Admin)">
-                              <Edit3 size={13} /> Edit
+                            <button onClick={() => setEditBorrowerTarget(b)} style={{ padding: '0.4rem 0.75rem', fontSize: '0.8rem', fontWeight: '800', background: '#FEF3C7', color: '#78350F', border: '1.5px solid #FCD34D', borderRadius: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.3rem' }} title="Edit Borrower (Super Admin)">
+                              <Edit3 size={14} /> Edit
                             </button>
-                            <button onClick={() => onDeleteBorrower && onDeleteBorrower(b.id)} className="btn-secondary" style={{ padding: '0.35rem 0.65rem', fontSize: '0.75rem', background: '#FEF2F2', color: '#DC2626', border: '1px solid #FCA5A5' }} title="Delete Borrower (Super Admin)">
-                              <Trash2 size={13} /> Delete
+                            <button onClick={() => onDeleteBorrower && onDeleteBorrower(b.id)} style={{ padding: '0.4rem 0.75rem', fontSize: '0.8rem', fontWeight: '800', background: '#FEE2E2', color: '#7F1D1D', border: '1.5px solid #FCA5A5', borderRadius: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.3rem' }} title="Delete Borrower (Super Admin)">
+                              <Trash2 size={14} /> Delete
                             </button>
                           </>
                         )}
@@ -468,30 +468,30 @@ export default function BranchWorkflowEngine({
                       </span>
                     </td>
                     <td>
-                      <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap' }}>
-                        <button onClick={() => openLoanModal(l, 'DETAILS')} className="btn-secondary" style={{ padding: '0.3rem 0.55rem', fontSize: '0.72rem', background: '#0284C7', color: '#FFFFFF', border: 'none' }} title="View Loan Details">
-                          <Eye size={12} /> View
+                      <div style={{ display: 'flex', gap: '0.4rem', flexWrap: 'wrap' }}>
+                        <button onClick={() => openLoanModal(l, 'DETAILS')} style={{ padding: '0.35rem 0.7rem', fontSize: '0.78rem', fontWeight: '800', background: '#0284C7', color: '#FFFFFF', border: 'none', borderRadius: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.25rem' }} title="View Loan Details">
+                          <Eye size={13} /> View
                         </button>
-                        <button onClick={() => openLoanModal(l, 'CONTRACT')} className="btn-secondary" style={{ padding: '0.3rem 0.55rem', fontSize: '0.72rem', background: '#F1F5F9', color: '#1E293B', border: '1px solid #CBD5E1' }} title="Print Loan Contract">
-                          <FileCheck size={12} /> Mkataba
+                        <button onClick={() => openLoanModal(l, 'CONTRACT')} style={{ padding: '0.35rem 0.7rem', fontSize: '0.78rem', fontWeight: '800', background: '#7C3AED', color: '#FFFFFF', border: 'none', borderRadius: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.25rem' }} title="Print Loan Contract">
+                          <FileCheck size={13} /> Mkataba
                         </button>
-                        <button onClick={() => openLoanModal(l, 'REMINDER')} className="btn-secondary" style={{ padding: '0.3rem 0.55rem', fontSize: '0.72rem', background: '#059669', color: '#FFFFFF', border: 'none' }} title="Send SMS Reminder">
-                          <Bell size={12} /> SMS
+                        <button onClick={() => openLoanModal(l, 'REMINDER')} style={{ padding: '0.35rem 0.7rem', fontSize: '0.78rem', fontWeight: '800', background: '#059669', color: '#FFFFFF', border: 'none', borderRadius: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.25rem' }} title="Send SMS Reminder">
+                          <Bell size={13} /> SMS
                         </button>
-                        <button onClick={() => openLoanModal(l, 'CALCULATOR')} className="btn-secondary" style={{ padding: '0.3rem 0.55rem', fontSize: '0.72rem', background: '#D4AF37', color: '#0F172A', border: 'none' }} title="Loan Calculator">
-                          <Calculator size={12} /> Calculator
+                        <button onClick={() => openLoanModal(l, 'CALCULATOR')} style={{ padding: '0.35rem 0.7rem', fontSize: '0.78rem', fontWeight: '900', background: 'linear-gradient(135deg, #D4AF37 0%, #B8860B 100%)', color: '#000000', border: 'none', borderRadius: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.25rem' }} title="Loan Calculator">
+                          <Calculator size={13} /> Calculator
                         </button>
-                        <button onClick={() => setRenewLoanTarget(l)} className="btn-secondary" style={{ padding: '0.3rem 0.55rem', fontSize: '0.72rem', background: '#ECFDF5', color: '#047857', border: '1px solid #6EE7B7' }} title="Renew Loan (Pay Interest Only)">
-                          <RefreshCw size={12} /> Renew
+                        <button onClick={() => setRenewLoanTarget(l)} style={{ padding: '0.35rem 0.7rem', fontSize: '0.78rem', fontWeight: '800', background: '#0D9488', color: '#FFFFFF', border: 'none', borderRadius: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.25rem' }} title="Renew Loan (Pay Interest Only)">
+                          <RefreshCw size={13} /> Renew
                         </button>
 
                         {currentUser?.role === 'SUPER_ADMIN' && (
                           <>
-                            <button onClick={() => setEditLoanTarget(l)} className="btn-secondary" style={{ padding: '0.3rem 0.55rem', fontSize: '0.72rem', background: '#FEF3C7', color: '#B8860B', border: '1px solid #FCD34D' }} title="Edit Loan (Super Admin)">
-                              <Edit3 size={12} /> Edit
+                            <button onClick={() => setEditLoanTarget(l)} style={{ padding: '0.35rem 0.7rem', fontSize: '0.78rem', fontWeight: '800', background: '#FEF3C7', color: '#78350F', border: '1.5px solid #FCD34D', borderRadius: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.25rem' }} title="Edit Loan (Super Admin)">
+                              <Edit3 size={13} /> Edit
                             </button>
-                            <button onClick={() => onDeleteLoan && onDeleteLoan(l.id)} className="btn-secondary" style={{ padding: '0.3rem 0.55rem', fontSize: '0.72rem', background: '#FEF2F2', color: '#DC2626', border: '1px solid #FCA5A5' }} title="Delete Loan (Super Admin)">
-                              <Trash2 size={12} /> Delete
+                            <button onClick={() => onDeleteLoan && onDeleteLoan(l.id)} style={{ padding: '0.35rem 0.7rem', fontSize: '0.78rem', fontWeight: '800', background: '#FEE2E2', color: '#7F1D1D', border: '1.5px solid #FCA5A5', borderRadius: '8px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.25rem' }} title="Delete Loan (Super Admin)">
+                              <Trash2 size={13} /> Delete
                             </button>
                           </>
                         )}

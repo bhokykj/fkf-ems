@@ -60,40 +60,40 @@ export default function BorrowerFullViewModal({ borrower, loans, onClose, initia
         </div>
 
         {/* TOP TAB STRIP MATCHING HANDWRITTEN PHOTO */}
-        <div style={{ display: 'flex', gap: '0.5rem', borderBottom: '2px solid #E2E8F0', padding: '0.75rem 1.75rem', background: '#F8FAFC', flexWrap: 'wrap' }}>
+        <div style={{ display: 'flex', gap: '0.6rem', borderBottom: '2px solid #CBD5E1', padding: '0.75rem 1.75rem', background: '#F8FAFC', flexWrap: 'wrap' }}>
           <button 
             onClick={() => setActiveTab('DETAILS')}
-            style={{ background: activeTab === 'DETAILS' ? '#0284C7' : '#FFFFFF', color: activeTab === 'DETAILS' ? '#FFFFFF' : '#475569', border: '1px solid #CBD5E1', padding: '0.5rem 1.1rem', borderRadius: '9999px', fontWeight: '700', fontSize: '0.82rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.35rem' }}
+            style={{ background: activeTab === 'DETAILS' ? '#0284C7' : '#FFFFFF', color: activeTab === 'DETAILS' ? '#FFFFFF' : '#0F172A', border: activeTab === 'DETAILS' ? '2px solid #0284C7' : '1.5px solid #CBD5E1', padding: '0.6rem 1.25rem', borderRadius: '9999px', fontWeight: '900', fontSize: '0.85rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.4rem' }}
           >
-            <User size={15} /> View Borrower
+            <User size={16} /> View Borrower
           </button>
 
           <button 
             onClick={() => setActiveTab('STATEMENT')}
-            style={{ background: activeTab === 'STATEMENT' ? '#0284C7' : '#FFFFFF', color: activeTab === 'STATEMENT' ? '#FFFFFF' : '#475569', border: '1px solid #CBD5E1', padding: '0.5rem 1.1rem', borderRadius: '9999px', fontWeight: '700', fontSize: '0.82rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.35rem' }}
+            style={{ background: activeTab === 'STATEMENT' ? '#0284C7' : '#FFFFFF', color: activeTab === 'STATEMENT' ? '#FFFFFF' : '#0F172A', border: activeTab === 'STATEMENT' ? '2px solid #0284C7' : '1.5px solid #CBD5E1', padding: '0.6rem 1.25rem', borderRadius: '9999px', fontWeight: '900', fontSize: '0.85rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.4rem' }}
           >
-            <FileText size={15} /> Borrower Statement
+            <FileText size={16} /> Borrower Statement
           </button>
 
           <button 
             onClick={() => setActiveTab('GUARANTORS')}
-            style={{ background: activeTab === 'GUARANTORS' ? '#0284C7' : '#FFFFFF', color: activeTab === 'GUARANTORS' ? '#FFFFFF' : '#475569', border: '1px solid #CBD5E1', padding: '0.5rem 1.1rem', borderRadius: '9999px', fontWeight: '700', fontSize: '0.82rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.35rem' }}
+            style={{ background: activeTab === 'GUARANTORS' ? '#0284C7' : '#FFFFFF', color: activeTab === 'GUARANTORS' ? '#FFFFFF' : '#0F172A', border: activeTab === 'GUARANTORS' ? '2px solid #0284C7' : '1.5px solid #CBD5E1', padding: '0.6rem 1.25rem', borderRadius: '9999px', fontWeight: '900', fontSize: '0.85rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.4rem' }}
           >
-            <Users size={15} /> Guarantors (Wadhamini)
+            <Users size={16} /> Guarantors (Wadhamini)
           </button>
 
           <button 
             onClick={() => setActiveTab('DOCUMENTS')}
-            style={{ background: activeTab === 'DOCUMENTS' ? '#0284C7' : '#FFFFFF', color: activeTab === 'DOCUMENTS' ? '#FFFFFF' : '#475569', border: '1px solid #CBD5E1', padding: '0.5rem 1.1rem', borderRadius: '9999px', fontWeight: '700', fontSize: '0.82rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.35rem' }}
+            style={{ background: activeTab === 'DOCUMENTS' ? '#0284C7' : '#FFFFFF', color: activeTab === 'DOCUMENTS' ? '#FFFFFF' : '#0F172A', border: activeTab === 'DOCUMENTS' ? '2px solid #0284C7' : '1.5px solid #CBD5E1', padding: '0.6rem 1.25rem', borderRadius: '9999px', fontWeight: '900', fontSize: '0.85rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.4rem' }}
           >
-            <FileCheck size={15} /> Document Vault
+            <FileCheck size={16} /> Document Vault
           </button>
 
           <button 
             onClick={() => setActiveTab('REPORT')}
-            style={{ background: activeTab === 'REPORT' ? '#0284C7' : '#FFFFFF', color: activeTab === 'REPORT' ? '#FFFFFF' : '#475569', border: '1px solid #CBD5E1', padding: '0.5rem 1.1rem', borderRadius: '9999px', fontWeight: '700', fontSize: '0.82rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.35rem' }}
+            style={{ background: activeTab === 'REPORT' ? '#0284C7' : '#FFFFFF', color: activeTab === 'REPORT' ? '#FFFFFF' : '#0F172A', border: activeTab === 'REPORT' ? '2px solid #0284C7' : '1.5px solid #CBD5E1', padding: '0.6rem 1.25rem', borderRadius: '9999px', fontWeight: '900', fontSize: '0.85rem', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '0.4rem' }}
           >
-            <Award size={15} /> Borrower Report
+            <Award size={16} /> Borrower Report
           </button>
         </div>
 
@@ -106,38 +106,38 @@ export default function BorrowerFullViewModal({ borrower, loans, onClose, initia
               
               {/* Summary Cards */}
               <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem' }}>
-                <div style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', padding: '1rem 1.25rem', borderRadius: '14px' }}>
-                  <div style={{ fontSize: '0.75rem', color: '#64748B', fontWeight: '700', textTransform: 'uppercase' }}>Jumla ya Mikopo (Loans)</div>
-                  <div style={{ fontSize: '1.6rem', fontWeight: '900', color: '#0F172A', marginTop: '0.2rem' }}>{totalLoansCount}</div>
-                  <span style={{ fontSize: '0.75rem', color: '#0284C7', fontWeight: '600' }}>Mikopo iliyochukuliwa</span>
+                <div style={{ background: '#FFFFFF', border: '1.5px solid #CBD5E1', borderLeft: '5px solid #0F172A', padding: '1.1rem 1.35rem', borderRadius: '14px' }}>
+                  <div style={{ fontSize: '0.8rem', color: '#0F172A', fontWeight: '900', textTransform: 'uppercase' }}>Jumla ya Mikopo (Loans)</div>
+                  <div style={{ fontSize: '1.75rem', fontWeight: '900', color: '#0F172A', marginTop: '0.25rem' }}>{totalLoansCount}</div>
+                  <span style={{ fontSize: '0.8rem', color: '#0284C7', fontWeight: '800' }}>Mikopo iliyochukuliwa</span>
                 </div>
 
-                <div style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', padding: '1rem 1.25rem', borderRadius: '14px' }}>
-                  <div style={{ fontSize: '0.75rem', color: '#64748B', fontWeight: '700', textTransform: 'uppercase' }}>Jumla ya Mikopo (TSH)</div>
-                  <div style={{ fontSize: '1.35rem', fontWeight: '900', color: '#059669', marginTop: '0.2rem' }}>TZS {totalBorrowedTSH.toLocaleString()}</div>
-                  <span style={{ fontSize: '0.75rem', color: '#059669', fontWeight: '600' }}>Kiasi cha Mkopo</span>
+                <div style={{ background: '#DCFCE7', border: '1.5px solid #86EFAC', borderLeft: '5px solid #059669', padding: '1.1rem 1.35rem', borderRadius: '14px' }}>
+                  <div style={{ fontSize: '0.8rem', color: '#14532D', fontWeight: '900', textTransform: 'uppercase' }}>Jumla ya Mikopo (TSH)</div>
+                  <div style={{ fontSize: '1.5rem', fontWeight: '900', color: '#059669', marginTop: '0.25rem' }}>TZS {totalBorrowedTSH.toLocaleString()}</div>
+                  <span style={{ fontSize: '0.8rem', color: '#047857', fontWeight: '800' }}>Kiasi cha Mtaji</span>
                 </div>
 
-                <div style={{ background: '#F8FAFC', border: '1px solid #E2E8F0', padding: '1rem 1.25rem', borderRadius: '14px' }}>
-                  <div style={{ fontSize: '0.75rem', color: '#64748B', fontWeight: '700', textTransform: 'uppercase' }}>Baki la Mkopo Hai</div>
-                  <div style={{ fontSize: '1.35rem', fontWeight: '900', color: '#DC2626', marginTop: '0.2rem' }}>TZS {totalBalanceTSH.toLocaleString()}</div>
-                  <span style={{ fontSize: '0.75rem', color: '#DC2626', fontWeight: '600' }}>Baki la Kurudisha</span>
+                <div style={{ background: '#FEE2E2', border: '1.5px solid #FCA5A5', borderLeft: '5px solid #DC2626', padding: '1.1rem 1.35rem', borderRadius: '14px' }}>
+                  <div style={{ fontSize: '0.8rem', color: '#7F1D1D', fontWeight: '900', textTransform: 'uppercase' }}>Baki la Mkopo Hai</div>
+                  <div style={{ fontSize: '1.5rem', fontWeight: '900', color: '#DC2626', marginTop: '0.25rem' }}>TZS {totalBalanceTSH.toLocaleString()}</div>
+                  <span style={{ fontSize: '0.8rem', color: '#B91C1C', fontWeight: '800' }}>Baki la Kurudisha</span>
                 </div>
               </div>
 
               {/* Personal & Location Grid */}
               <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1.5rem' }}>
-                <div style={{ background: '#FFFFFF', border: '1px solid #E2E8F0', borderRadius: '16px', padding: '1.25rem' }}>
-                  <h3 style={{ fontSize: '1rem', fontWeight: '800', color: '#0F172A', marginBottom: '1rem', borderBottom: '1px solid #E2E8F0', paddingBottom: '0.5rem' }}>
+                <div style={{ background: '#FFFFFF', border: '1.5px solid #CBD5E1', borderRadius: '16px', padding: '1.35rem' }}>
+                  <h3 style={{ fontSize: '1.05rem', fontWeight: '900', color: '#0F172A', marginBottom: '1rem', borderBottom: '2px solid #E2E8F0', paddingBottom: '0.5rem' }}>
                     💳 Taarifa za Binfasi & Kazi
                   </h3>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.65rem', fontSize: '0.85rem' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem', fontSize: '0.88rem' }}>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <span style={{ color: '#64748B' }}>Jina Kamili:</span>
-                      <strong>{borrower.first_name} {borrower.last_name}</strong>
+                      <span style={{ color: '#0F172A', fontWeight: '800' }}>Jina Kamili:</span>
+                      <strong style={{ color: '#0F172A' }}>{borrower.first_name} {borrower.last_name}</strong>
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
-                      <span style={{ color: '#64748B' }}>Jinsia (Gender):</span>
+                      <span style={{ color: '#0F172A', fontWeight: '800' }}>Jinsia (Gender):</span>
                       <span>{borrower.gender || 'Male'}</span>
                     </div>
                     <div style={{ display: 'flex', justifyContent: 'space-between' }}>
