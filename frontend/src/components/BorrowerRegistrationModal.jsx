@@ -453,10 +453,10 @@ export default function BorrowerRegistrationModal({ currentUser, branches, onClo
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.4rem', color: '#0284C7', fontWeight: '800', fontSize: '0.9rem' }}>
               <Info size={18} /> Maelekezo
             </div>
-            <p style={{ fontSize: '0.8rem', color: '#64748B', margin: 0 }}>
+            <p style={{ fontSize: '0.85rem', color: '#1E293B', fontWeight: '700', margin: 0 }}>
               Borrower akiongezwa hapa:
             </p>
-            <ul style={{ fontSize: '0.78rem', color: '#64748B', margin: 0, paddingLeft: '1.25rem', lineHeight: '1.5' }}>
+            <ul style={{ fontSize: '0.82rem', color: '#334155', fontWeight: '600', margin: 0, paddingLeft: '1.25rem', lineHeight: '1.6' }}>
               <li>atawekwa kwenye <strong>borrowers</strong></li>
               <li>atatengenezewa <strong>account kwenye users</strong></li>
               <li><strong>username/password</strong> vitatumika kuingia</li>

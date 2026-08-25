@@ -217,10 +217,10 @@ export default function LoanApplicationModal({ borrowers, branches, loanProducts
           </div>
 
           <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.75rem', marginTop: '0.75rem' }}>
-            <button type="button" onClick={onClose} className="btn-secondary" style={{ background: '#F1F5F9', border: '1px solid #CBD5E1', color: '#475569', padding: '0.6rem 1.25rem', fontWeight: '800' }}>
+            <button type="button" onClick={onClose} className="btn-secondary" style={{ background: '#F8FAFC', border: '1.5px solid #94A3B8', color: '#0F172A', padding: '0.65rem 1.35rem', fontWeight: '800', borderRadius: '10px' }}>
               Ghairi
             </button>
-            <button type="submit" className="btn-primary" style={{ background: '#059669', padding: '0.6rem 1.5rem', fontWeight: '900', fontSize: '0.9rem' }}>
+            <button type="submit" style={{ background: '#059669', color: '#FFFFFF', border: '1px solid #047857', padding: '0.65rem 1.6rem', fontWeight: '900', fontSize: '0.92rem', borderRadius: '10px', cursor: 'pointer', boxShadow: '0 4px 12px rgba(5, 150, 105, 0.3)' }}>
               Wasilisha Ombi
             </button>
           </div>
